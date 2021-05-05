@@ -5,8 +5,7 @@ export class AccountEntity {
   private _id: number;
   private _firstName: string;
   private _lastName: string;
-  @IsEmail()
-  private _email: string;
+  @IsEmail() private _email: string;
   private _password: string;
   private _products: ProductEntity[];
 

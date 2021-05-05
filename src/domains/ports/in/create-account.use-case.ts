@@ -1,3 +1,5 @@
+export const CreateAccountUseCaseSymbol = Symbol('CreateAccountUseCase');
+
 export interface CreateAccountUseCase {
   createAccount(command: CreateAccountCommand): Promise<CreateAccountResult>;
 }
