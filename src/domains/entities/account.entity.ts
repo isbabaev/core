@@ -10,51 +10,51 @@ export class AccountEntity {
   private _password: string;
   private _products: ProductEntity[];
 
-  private get id(): number {
+  get id(): number {
     return this._id;
   }
 
-  private set id(value: number) {
+  set id(value: number) {
     this._id = value;
   }
 
-  private get firstName(): string {
+  get firstName(): string {
     return this._firstName;
   }
 
-  private set firstName(value: string) {
+  set firstName(value: string) {
     this._firstName = value;
   }
 
-  private get lastName(): string {
+  get lastName(): string {
     return this._lastName;
   }
 
-  private set lastName(value: string) {
+  set lastName(value: string) {
     this._lastName = value;
   }
 
-  private get email(): string {
+  get email(): string {
     return this._email;
   }
 
-  private set email(value: string) {
+  set email(value: string) {
     this._email = value;
   }
 
-  private get password(): string {
+  get password(): string {
     return this._password;
   }
 
-  private set password(value: string) {
+  set password(value: string) {
     this._password = value;
   }
 
-  private get products(): ProductEntity[] {
+  get products(): ProductEntity[] {
     return this._products;
   }
 
-  private set products(value: ProductEntity[]) {
+  set products(value: ProductEntity[]) {
     this._products = value;
   }
 
