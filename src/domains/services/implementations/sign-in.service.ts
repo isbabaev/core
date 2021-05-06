@@ -1,9 +1,9 @@
-import { SignInUseCase } from '../ports/in/sign-in.use-case';
-import { GetAccountByEmailPort } from '../ports/out/get-account-by-email.port';
-import { GenerateJwtTokenPort } from '../ports/out/generate-jwt-token.port';
-import { ICompareHashPort } from '../ports/out/compare-hash.port';
+import { ISignInService } from '../definitions/sign-in.service';
+import { GetAccountByEmailPort } from '../../ports/out/get-account-by-email.port';
+import { GenerateJwtTokenPort } from '../../ports/out/generate-jwt-token.port';
+import { ICompareHashPort } from '../../ports/out/compare-hash.port';
 
-export class SignInService implements SignInUseCase {
+export class SignInService implements ISignInService {
   constructor(private readonly getAccountByEmailPort: GetAccountByEmailPort,
               private readonly generateJwtTokenPort: GenerateJwtTokenPort,
               private readonly compareHashPort: ICompareHashPort) {

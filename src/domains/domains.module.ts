@@ -6,13 +6,14 @@ import { AddAccountToDatabasePort, AddAccountToDatabasePortSymbol } from './port
 import { EncryptorModule } from '../modules/encryptor/encryptor.module';
 import { HashPort, HashPortSymbol } from './ports/out/hash.port';
 import { AuthModule } from '../modules/auth/auth.module';
-import { SignInUseCaseSymbol } from './ports/in/sign-in.use-case';
-import { SignInService } from './services/sign-in.service';
+import { ISignInUseCaseSymbol } from './services/definitions/sign-in.service';
+import { SignInService } from './services/implementations/sign-in.service';
 import {
   GetAccountByEmailPort,
   GetAccountByEmailAndPasswordPortSymbol,
 } from './ports/out/get-account-by-email.port';
 import { GenerateJwtTokenPort, GenerateJwtTokenPortSymbol } from './ports/out/generate-jwt-token.port';
+import { ICompareHashPort } from './ports/out/compare-hash.port';
 
 const providers: FactoryProvider[] = [
   {
@@ -23,10 +24,11 @@ const providers: FactoryProvider[] = [
     inject: [AddAccountToDatabasePortSymbol, HashPortSymbol],
   },
   {
-    provide: SignInUseCaseSymbol,
+    provide: ISignInUseCaseSymbol,
     useFactory: (getAccountByEmailAndPasswordPort: GetAccountByEmailPort,
-                 generateJwtTokenPort: GenerateJwtTokenPort) => {
-      return new SignInService(getAccountByEmailAndPasswordPort, generateJwtTokenPort);
+                 generateJwtTokenPort: GenerateJwtTokenPort,
+                 compareHashPort: ICompareHashPort) => {
+      return new SignInService(getAccountByEmailAndPasswordPort, generateJwtTokenPort, compareHashPort);
     },
     inject: [
       GetAccountByEmailAndPasswordPortSymbol,

@@ -1,13 +1,13 @@
-import { CreateAccountService } from '../create-account.service';
+import { CreateAccountService } from '../../create-account.service';
 import {
   AddAccountToDatabasePort,
   AddAccountToDatabasePortSymbol,
-} from '../../ports/out/add-account-to-database.port';
-import { AccountEntity } from '../../entities/account.entity';
+} from '../../../ports/out/add-account-to-database.port';
+import { AccountEntity } from '../../../entities/account.entity';
 import { anyString, mock, when } from 'ts-mockito';
 import { Test } from '@nestjs/testing';
-import { DomainsModule } from '../../domains.module';
-import { HashPort, HashPortSymbol } from '../../ports/out/hash.port';
+import { DomainsModule } from '../../../domains.module';
+import { HashPort, HashPortSymbol } from '../../../ports/out/hash.port';
 
 describe('CreateAccountServiceTest', () => {
   let createAccountService: CreateAccountService;
