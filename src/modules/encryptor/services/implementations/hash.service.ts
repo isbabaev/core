@@ -8,4 +8,8 @@ export class HashService implements IHashService {
     const salt = await bcrypt.genSalt();
     return bcrypt.hash(data, salt);
   }
+
+  compare(data: any, encrypted: string): Promise<boolean> {
+    return bcrypt.compare(data, encrypted);
+  }
 }
