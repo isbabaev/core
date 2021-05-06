@@ -8,6 +8,8 @@ export class AccountEntity {
   @IsEmail() private _email: string;
   private _password: string;
   private _products: ProductEntity[];
+  private _createdAt: Date;
+  private _updatedAt: Date;
 
   get id(): number {
     return this._id;
@@ -55,6 +57,22 @@ export class AccountEntity {
 
   set products(value: ProductEntity[]) {
     this._products = value;
+  }
+
+  get createdAt(): Date {
+    return this._createdAt;
+  }
+
+  set createdAt(value: Date) {
+    this._createdAt = value;
+  }
+
+  get updatedAt(): Date {
+    return this._updatedAt;
+  }
+
+  set updatedAt(value: Date) {
+    this._updatedAt = value;
   }
 
   private constructor(firstName: string,
