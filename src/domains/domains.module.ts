@@ -13,7 +13,7 @@ import {
   GetAccountByEmailPortSymbol,
 } from './ports/out/get-account-by-email.port';
 import { GenerateJwtTokenPort, GenerateJwtTokenPortSymbol } from './ports/out/generate-jwt-token.port';
-import { ICompareHashPort } from './ports/out/compare-hash.port';
+import { ICompareHashPort, ICompareHashPortSymbol } from './ports/out/compare-hash.port';
 
 const providers: FactoryProvider[] = [
   {
@@ -32,7 +32,8 @@ const providers: FactoryProvider[] = [
     },
     inject: [
       GetAccountByEmailPortSymbol,
-      GenerateJwtTokenPortSymbol
+      GenerateJwtTokenPortSymbol,
+      ICompareHashPortSymbol,
     ]
   }
 ]
