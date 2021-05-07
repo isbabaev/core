@@ -1,6 +1,6 @@
 import { AccountService } from '../account.service';
 import { Test } from '@nestjs/testing';
-import { DatabaseModule } from '../../../database.module';
+import { DatabaseModule, DatabaseServiceClientProxySymbol } from '../../../database.module';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { IAccount } from '../../../interfaces/account.interface';
@@ -14,8 +14,7 @@ describe('AccountServiceTest', () => {
       imports: [DatabaseModule]
     }).compile();
 
-    clientProxy = moduleRef.get<ClientProxy>('DATABASE_SERVICE');
-
+    clientProxy = moduleRef.get<ClientProxy>(DatabaseServiceClientProxySymbol);
     accountService = new AccountService(clientProxy);
   });
 

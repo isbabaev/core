@@ -3,12 +3,10 @@ import {
   AddAccountToDatabaseResult,
 } from '../../../domains/ports/out/add-account-to-database.port';
 import { AccountEntity } from '../../../domains/entities/account.entity';
-import { AccountServiceSymbol, IAccountService } from '../services/definitions/account.service';
-import { Inject } from '@nestjs/common';
+import { IAccountService } from '../services/definitions/account.service';
 
 export class AddAccountToDatabaseAdapter implements AddAccountToDatabasePort {
-  constructor(@Inject(AccountServiceSymbol)
-              private readonly accountService: IAccountService) {
+  constructor(private readonly accountService: IAccountService) {
   }
 
   addAccountToDatabase(account: AccountEntity): Promise<AddAccountToDatabaseResult> {

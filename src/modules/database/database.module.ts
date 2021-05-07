@@ -1,5 +1,5 @@
 import { FactoryProvider, Inject, Module, OnApplicationBootstrap, OnApplicationShutdown } from '@nestjs/common';
-import { ClientProxy, ClientsModule, Transport } from '@nestjs/microservices';
+import { ClientProxy, ClientProxyFactory, Transport } from '@nestjs/microservices';
 import { AccountServiceSymbol, IAccountService } from './services/definitions/account.service';
 import { AccountService } from './services/implementations/account.service';
 import { AddAccountToDatabasePortSymbol } from '../../domains/ports/out/add-account-to-database.port';
@@ -8,6 +8,7 @@ import { GetAccountByEmailPortSymbol } from '../../domains/ports/out/get-account
 import { GetAccountByEmailAdapter } from './adapters/get-account-by-email.adapter';
 require('dotenv').config();
 
+export const DatabaseServiceClientProxySymbol = Symbol('DATABASE_SERVICE');
 
 const exportProviders: FactoryProvider[] = [
   {
@@ -27,25 +28,28 @@ const exportProviders: FactoryProvider[] = [
 ];
 
 @Module({
-  imports: [
-    ClientsModule.register([
-      {
-        name: 'DATABASE_SERVICE',
-        transport: Transport.RMQ,
-        options: {
-          urls: [process.env.DATABASE_RABBITMQ_URL],
-          queue: process.env.DATABASE_QUEUE_NAME,
-          queueOptions: {
-            durable: false,
-          },
-        },
-      },
-    ]),
-  ],
   providers: [
     {
+      provide: DatabaseServiceClientProxySymbol,
+      useFactory: () => {
+        return ClientProxyFactory.create({
+          transport: Transport.RMQ,
+          options: {
+            urls: [process.env.DATABASE_RABBITMQ_URL],
+            queue: process.env.DATABASE_QUEUE_NAME,
+            queueOptions: {
+              durable: false,
+            },
+          },
+        })
+      }
+    },
+    {
       provide: AccountServiceSymbol,
-      useClass: AccountService
+      useFactory: (clientProxy: ClientProxy) => {
+        return new AccountService(clientProxy);
+      },
+      inject: [DatabaseServiceClientProxySymbol],
     },
     ...exportProviders
   ],
@@ -54,7 +58,7 @@ const exportProviders: FactoryProvider[] = [
   ],
 })
 export class DatabaseModule implements OnApplicationBootstrap, OnApplicationShutdown {
-  constructor(@Inject('DATABASE_SERVICE')
+  constructor(@Inject(DatabaseServiceClientProxySymbol)
               private readonly client: ClientProxy) {
   }
 
