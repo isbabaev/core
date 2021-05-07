@@ -76,21 +76,33 @@ export class AccountEntity {
   }
 
   private constructor(firstName: string,
-              lastName: string,
-              email: string,
-              password: string) {
+                      lastName: string,
+                      email: string,
+                      password: string,
+                      id?: number,
+                      products?: ProductEntity[],
+                      createdAt?: Date,
+                      updatedAt?: Date) {
 
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.password = password;
+    this.id = id;
+    this.products = products;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
   }
 
   static async create(firstName: string,
                       lastName: string,
                       email: string,
-                      password: string): Promise<AccountEntity> {
-    const account = new AccountEntity(firstName, lastName, email, password);
+                      password: string,
+                      id?: number,
+                      products?: ProductEntity[],
+                      createdAt?: Date,
+                      updatedAt?: Date): Promise<AccountEntity> {
+    const account = new AccountEntity(firstName, lastName, email, password, id, products, createdAt, updatedAt);
 
     const validationErrors = await validate(account);
     if (validationErrors.length > 0) {

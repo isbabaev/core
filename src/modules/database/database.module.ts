@@ -1,6 +1,6 @@
 import { FactoryProvider, Inject, Module, OnApplicationBootstrap, OnApplicationShutdown } from '@nestjs/common';
 import { ClientProxy, ClientsModule, Transport } from '@nestjs/microservices';
-import { AccountServiceSymbol, IAccountService } from './services/definitions/account.service.interface';
+import { AccountServiceSymbol, IAccountService } from './services/definitions/account.service';
 import { AccountService } from './services/implementations/account.service';
 import { AddAccountToDatabasePortSymbol } from '../../domains/ports/out/add-account-to-database.port';
 import { AddAccountToDatabaseAdapter } from './adapters/add-account-to-database.adapter';
