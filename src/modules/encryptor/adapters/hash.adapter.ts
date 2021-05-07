@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { HashPort } from '../../../domains/ports/out/hash.port';
 import { HashServiceSymbol, IHashService } from '../services/definitions/hash.service';
 
