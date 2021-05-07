@@ -4,6 +4,8 @@ import { AccountServiceSymbol, IAccountService } from './services/definitions/ac
 import { AccountService } from './services/implementations/account.service';
 import { AddAccountToDatabasePortSymbol } from '../../domains/ports/out/add-account-to-database.port';
 import { AddAccountToDatabaseAdapter } from './adapters/add-account-to-database.adapter';
+import { GetAccountByEmailPortSymbol } from '../../domains/ports/out/get-account-by-email.port';
+import { GetAccountByEmailAdapter } from './adapters/get-account-by-email.adapter';
 require('dotenv').config();
 
 
@@ -12,6 +14,13 @@ const exportProviders: FactoryProvider[] = [
     provide: AddAccountToDatabasePortSymbol,
     useFactory: (accountService: IAccountService) => {
       return new AddAccountToDatabaseAdapter(accountService);
+    },
+    inject: [AccountServiceSymbol]
+  },
+  {
+    provide: GetAccountByEmailPortSymbol,
+    useFactory: (accountService: IAccountService)=> {
+      return new GetAccountByEmailAdapter(accountService);
     },
     inject: [AccountServiceSymbol]
   }

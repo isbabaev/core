@@ -10,7 +10,7 @@ import { ISignInUseCaseSymbol } from './services/definitions/sign-in.service';
 import { SignInService } from './services/implementations/sign-in.service';
 import {
   GetAccountByEmailPort,
-  GetAccountByEmailAndPasswordPortSymbol,
+  GetAccountByEmailPortSymbol,
 } from './ports/out/get-account-by-email.port';
 import { GenerateJwtTokenPort, GenerateJwtTokenPortSymbol } from './ports/out/generate-jwt-token.port';
 import { ICompareHashPort } from './ports/out/compare-hash.port';
@@ -25,13 +25,13 @@ const providers: FactoryProvider[] = [
   },
   {
     provide: ISignInUseCaseSymbol,
-    useFactory: (getAccountByEmailAndPasswordPort: GetAccountByEmailPort,
+    useFactory: (getAccountByEmailPort: GetAccountByEmailPort,
                  generateJwtTokenPort: GenerateJwtTokenPort,
                  compareHashPort: ICompareHashPort) => {
-      return new SignInService(getAccountByEmailAndPasswordPort, generateJwtTokenPort, compareHashPort);
+      return new SignInService(getAccountByEmailPort, generateJwtTokenPort, compareHashPort);
     },
     inject: [
-      GetAccountByEmailAndPasswordPortSymbol,
+      GetAccountByEmailPortSymbol,
       GenerateJwtTokenPortSymbol
     ]
   }
