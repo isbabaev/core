@@ -1,5 +1,5 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
-import { CreateAccountUseCase, CreateAccountUseCaseSymbol } from '../../../domains/ports/in/create-account.use-case';
+import { CreateAccountUseCase, CreateAccountUseCaseSymbol } from '../../../domains/ports/in/create-account/create-account.use-case';
 import { CreateAccountDto } from '../dto/account.dto';
 
 @Controller('account')

@@ -1,4 +1,4 @@
-import { AccountEntity } from '../../entities/account.entity';
+import { AccountEntity } from '../../../entities/account.entity';
 
 export const GetAccountByEmailPortSymbol = Symbol('GetAccountByEmailPort');
 

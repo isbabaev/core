@@ -1,17 +1,21 @@
-import { CreateAccountCommand, CreateAccountResult, CreateAccountUseCase } from '../ports/in/create-account.use-case';
-import { AddAccountToDatabasePort } from '../ports/out/add-account-to-database.port';
+import { IAddAccountToDatabasePort } from '../ports/out/database/add-account-to-database/add-account-to-database.port';
 import { AccountEntity } from '../entities/account.entity';
-import { HashPort } from '../ports/out/hash.port';
+import { IHashPort } from '../ports/out/encryptor/hash/hash.port';
+import { ICreateAccountUseCase } from '../ports/in/create-account/create-account.use-case';
+import { ICreateAccountResult } from '../ports/in/create-account/create-account.result';
+import { ICreateAccountCommand } from '../ports/in/create-account/create-account.command';
 
-export class CreateAccountService implements CreateAccountUseCase {
-  constructor(private readonly addAccountToDatabasePort: AddAccountToDatabasePort,
-              private readonly hashPort: HashPort) {
+export class CreateAccountService implements ICreateAccountUseCase {
+  constructor(private readonly addAccountToDatabasePort: IAddAccountToDatabasePort,
+              private readonly hashPort: IHashPort) {
   }
 
-  async createAccount(command: CreateAccountCommand): Promise<CreateAccountResult> {
+  async createAccount(command: ICreateAccountCommand): Promise<ICreateAccountResult> {
     const {firstName, lastName, email, password} = command;
 
-    const hashedPassword = await this.hashPort.hash(password);
+    // TODO проверка на наличие емейла в бд
+
+    const { hash: hashedPassword } = await this.hashPort.hash(password);
     const account = await AccountEntity.create(firstName, lastName, email, hashedPassword);
 
     return this.addAccountToDatabasePort.addAccountToDatabase(account);

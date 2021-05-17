@@ -1,4 +1,4 @@
-import { GenerateJwtTokenPort } from '../../../domains/ports/out/generate-jwt-token.port';
+import { GenerateJwtTokenPort } from '../../../domains/ports/out/auth/generate-jwt-token.port';
 import { IAuthService } from '../services/definitions/auth.service';
 
 export class GenerateJwtTokenAdapter implements GenerateJwtTokenPort {

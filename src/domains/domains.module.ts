@@ -1,30 +1,30 @@
 import { FactoryProvider, Module } from '@nestjs/common';
 import { DatabaseModule } from '../modules/database/database.module';
-import { CreateAccountUseCaseSymbol } from './ports/in/create-account.use-case';
+import { CreateAccountUseCaseSymbol } from './ports/in/create-account/create-account.use-case';
 import { CreateAccountService } from './services/create-account.service';
-import { AddAccountToDatabasePort, AddAccountToDatabasePortSymbol } from './ports/out/add-account-to-database.port';
+import { IAddAccountToDatabasePort, AddAccountToDatabasePortSymbol } from './ports/out/database/add-account-to-database/add-account-to-database.port';
 import { EncryptorModule } from '../modules/encryptor/encryptor.module';
-import { HashPort, HashPortSymbol } from './ports/out/hash.port';
+import { IHashPort, HashPortSymbol } from './ports/out/encryptor/hash/hash.port';
 import { AuthModule } from '../modules/auth/auth.module';
-import { ISignInUseCaseSymbol } from './services/definitions/sign-in.service';
-import { SignInService } from './services/implementations/sign-in.service';
+import { SignInService } from './services/sign-in.service';
 import {
   GetAccountByEmailPort,
   GetAccountByEmailPortSymbol,
-} from './ports/out/get-account-by-email.port';
-import { GenerateJwtTokenPort, GenerateJwtTokenPortSymbol } from './ports/out/generate-jwt-token.port';
-import { ICompareHashPort, ICompareHashPortSymbol } from './ports/out/compare-hash.port';
+} from './ports/out/database/get-account-by-email.port';
+import { GenerateJwtTokenPort, GenerateJwtTokenPortSymbol } from './ports/out/auth/generate-jwt-token.port';
+import { ICompareHashPort, ICompareHashPortSymbol } from './ports/out/encryptor/compare-hash.port';
+import { SignInUseCaseSymbol } from './ports/in/sign-in/sign-in.use-case';
 
 const providers: FactoryProvider[] = [
   {
     provide: CreateAccountUseCaseSymbol,
-    useFactory: (addAccountToDatabasePort: AddAccountToDatabasePort, hashPort: HashPort) => {
+    useFactory: (addAccountToDatabasePort: IAddAccountToDatabasePort, hashPort: IHashPort) => {
       return new CreateAccountService(addAccountToDatabasePort, hashPort);
     },
     inject: [AddAccountToDatabasePortSymbol, HashPortSymbol],
   },
   {
-    provide: ISignInUseCaseSymbol,
+    provide: SignInUseCaseSymbol,
     useFactory: (getAccountByEmailPort: GetAccountByEmailPort,
                  generateJwtTokenPort: GenerateJwtTokenPort,
                  compareHashPort: ICompareHashPort) => {

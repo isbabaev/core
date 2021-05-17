@@ -1,4 +1,4 @@
-import { ICompareHashPort } from '../../../domains/ports/out/compare-hash.port';
+import { ICompareHashPort } from '../../../domains/ports/out/encryptor/compare-hash.port';
 import { IHashService } from '../services/definitions/hash.service';
 
 export class CompareHashAdapter implements ICompareHashPort {

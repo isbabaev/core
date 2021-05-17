@@ -1,9 +1,9 @@
 import { FactoryProvider, Module } from '@nestjs/common';
-import { HashPortSymbol } from '../../domains/ports/out/hash.port';
+import { HashPortSymbol } from '../../domains/ports/out/encryptor/hash/hash.port';
 import { HashAdapter } from './adapters/hash.adapter';
 import { HashServiceSymbol, IHashService } from './services/definitions/hash.service';
 import { HashService } from './services/implementations/hash.service';
-import { ICompareHashPortSymbol } from '../../domains/ports/out/compare-hash.port';
+import { ICompareHashPortSymbol } from '../../domains/ports/out/encryptor/compare-hash.port';
 import { CompareHashAdapter } from './adapters/compare-hash.adapter';
 
 const exportProviders: FactoryProvider[] = [

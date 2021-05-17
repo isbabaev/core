@@ -1,10 +1,10 @@
 import { SignInService } from '../sign-in.service';
-import { DomainsModule } from '../../../domains.module';
+import { DomainsModule } from '../../domains.module';
 import { Test } from '@nestjs/testing';
-import { GetAccountByEmailPort, GetAccountByEmailPortSymbol } from '../../../ports/out/get-account-by-email.port';
-import { GenerateJwtTokenPort, GenerateJwtTokenPortSymbol } from '../../../ports/out/generate-jwt-token.port';
-import { ICompareHashPort, ICompareHashPortSymbol } from '../../../ports/out/compare-hash.port';
-import { AccountEntity } from '../../../entities/account.entity';
+import { GetAccountByEmailPort, GetAccountByEmailPortSymbol } from '../../ports/out/database/get-account-by-email.port';
+import { GenerateJwtTokenPort, GenerateJwtTokenPortSymbol } from '../../ports/out/auth/generate-jwt-token.port';
+import { ICompareHashPort, ICompareHashPortSymbol } from '../../ports/out/encryptor/compare-hash.port';
+import { AccountEntity } from '../../entities/account.entity';
 import { anyString, mock } from 'ts-mockito';
 
 describe('SignInServiceTest', () => {

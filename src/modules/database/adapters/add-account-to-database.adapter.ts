@@ -1,11 +1,11 @@
 import {
-  AddAccountToDatabasePort,
+  IAddAccountToDatabasePort,
   AddAccountToDatabaseResult,
-} from '../../../domains/ports/out/add-account-to-database.port';
+} from '../../../domains/ports/out/database/add-account-to-database/add-account-to-database.port';
 import { AccountEntity } from '../../../domains/entities/account.entity';
 import { IAccountService } from '../services/definitions/account.service';
 
-export class AddAccountToDatabaseAdapter implements AddAccountToDatabasePort {
+export class AddAccountToDatabaseAdapter implements IAddAccountToDatabasePort {
   constructor(private readonly accountService: IAccountService) {
   }
 

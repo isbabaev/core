@@ -3,7 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { IAuthService, IAuthServiceSymbol } from './services/definitions/auth.service';
 import { GenerateJwtTokenAdapter } from './adapters/generate-jwt-token.adapter';
 import { AuthService } from './services/implementations/auth.service';
-import { GenerateJwtTokenPortSymbol } from '../../domains/ports/out/generate-jwt-token.port';
+import { GenerateJwtTokenPortSymbol } from '../../domains/ports/out/auth/generate-jwt-token.port';
 require('dotenv').config();
 
 const exportProviders: FactoryProvider[] = [
@@ -35,5 +35,4 @@ const exportProviders: FactoryProvider[] = [
   ]
 })
 export class AuthModule {
-
 }

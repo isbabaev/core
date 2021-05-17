@@ -1,7 +1,7 @@
-import { HashPort } from '../../../domains/ports/out/hash.port';
+import { IHashPort } from '../../../domains/ports/out/encryptor/hash/hash.port';
 import { IHashService } from '../services/definitions/hash.service';
 
-export class HashAdapter implements HashPort {
+export class HashAdapter implements IHashPort {
   constructor(private readonly hashService: IHashService) {
   }
 
