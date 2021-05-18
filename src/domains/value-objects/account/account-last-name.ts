@@ -3,7 +3,7 @@ import * as Joi from 'joi';
 
 export class AccountLastName extends BaseValueObject<string> {
   constructor(value: string) {
-    Joi.assert(value, Joi.string().max(50).required());
+    Joi.assert(value, Joi.string().regex(/^[a-zA-Z]+$/).max(50).required());
     super(value);
   }
 }

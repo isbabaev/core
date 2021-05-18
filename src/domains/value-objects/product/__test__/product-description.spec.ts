@@ -16,6 +16,12 @@ describe('ProductDescriptionTest', () => {
     expect(productDescription.value).toBe(value);
   });
 
+  test('should throw exception when value length is lest than 10', async () => {
+    const value = randomString.generate(9);
+    expect(() => new ProductDescription(value))
+      .toThrowError('"value" length must be at least 10 characters long');
+  });
+
   test('should throw exception when value length is greater than 2000', async () => {
     const value = randomString.generate(2001);
     expect(() => new ProductDescription(value))

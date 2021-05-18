@@ -1,48 +1,18 @@
 import { ProductEntity } from './product.entity';
 import { AccountEntity } from './account.entity';
+import { Id } from '../value-objects/id';
+import { PurchaseDate } from '../value-objects/purchase/purchase-date';
 
 export class PurchaseEntity {
-  private _id: number;
-  private _product: ProductEntity;
-  private _buyer: AccountEntity;
-  private _purchaseDate: Date;
+  private id: Id;
+  private product: ProductEntity;
+  private buyer: AccountEntity;
+  private purchaseDate: PurchaseDate;
 
-  get id(): number {
-    return this._id;
-  }
-
-  set id(value: number) {
-    this._id = value;
-  }
-
-  get product(): ProductEntity {
-    return this._product;
-  }
-
-  set product(value: ProductEntity) {
-    this._product = value;
-  }
-
-  get buyer(): AccountEntity {
-    return this._buyer;
-  }
-
-  set buyer(value: AccountEntity) {
-    this._buyer = value;
-  }
-
-  get purchaseDate(): Date {
-    return this._purchaseDate;
-  }
-
-  set purchaseDate(value: Date) {
-    this._purchaseDate = value;
-  }
-
-  constructor(id: number,
+  constructor(id: Id,
               product: ProductEntity,
               buyer: AccountEntity,
-              purchaseDate: Date) {
+              purchaseDate: PurchaseDate) {
 
     this.id = id;
     this.product = product;

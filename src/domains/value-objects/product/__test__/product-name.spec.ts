@@ -16,6 +16,12 @@ describe('ProductNameTest', () => {
     expect(productName.value).toBe(value);
   });
 
+  test('should throw exception when value length is lest than 5', async () => {
+    const value = randomString.generate(4);
+    expect(() => new ProductName(value))
+      .toThrowError('"value" length must be at least 5 characters long');
+  });
+
   test('should throw exception when value length is greater than 500', async () => {
     const value = randomString.generate(501);
     expect(() => new ProductName(value))
