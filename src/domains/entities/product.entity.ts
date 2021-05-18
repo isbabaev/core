@@ -1,37 +1,16 @@
 import { BigNumber } from 'bignumber.js';
 import { AccountEntity } from './account.entity';
+import { Id } from '../value-objects/id';
+import { ProductName } from '../value-objects/product/product-name';
+import { ProductDescription } from '../value-objects/product/product-description';
 
-export class ProductEntity {
-  private _id: number;
-  private _name: string;
-  private _description: string;
+export class ProductEntity { // TODO remove entity
+  private id: Id;
+  private name: ProductName;
+  private description: ProductDescription;
   private _photoUrls: string[];
   private _price: BigNumber;
   private _seller: AccountEntity;
-
-  get id(): number {
-    return this._id;
-  }
-
-  set id(value: number) {
-    this._id = value;
-  }
-
-  get name(): string {
-    return this._name;
-  }
-
-  set name(value: string) {
-    this._name = value;
-  }
-
-  get description(): string {
-    return this._description;
-  }
-
-  set description(value: string) {
-    this._description = value;
-  }
 
   get photoUrls(): string[] {
     return this._photoUrls;
@@ -57,9 +36,9 @@ export class ProductEntity {
     this._seller = value;
   }
 
-  constructor(id: number,
-              name: string,
-              description: string,
+  constructor(id: Id,
+              name: ProductName,
+              description: ProductDescription,
               photoUrls: string[],
               price: BigNumber,
               seller: AccountEntity) {
