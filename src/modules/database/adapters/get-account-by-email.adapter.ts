@@ -1,4 +1,4 @@
-import { GetAccountByEmailPort } from '../../../domains/ports/out/database/get-account-by-email.port';
+import { GetAccountByEmailPort } from '../../../domains/ports/out/persistence/get-account-by-email.port';
 import { IAccountService } from '../services/definitions/account.service';
 import { Account } from '../../../domains/entities/account';
 import { AccountMapper } from '../mappers/account.mapper';

@@ -2,9 +2,9 @@ import { FactoryProvider, Inject, Module, OnApplicationBootstrap, OnApplicationS
 import { ClientProxy, ClientProxyFactory, Transport } from '@nestjs/microservices';
 import { AccountServiceSymbol, IAccountService } from './services/definitions/account.service';
 import { AccountService } from './services/implementations/account.service';
-import { AddAccountToDatabasePortSymbol } from '../../domains/ports/out/database/add-account-to-database/add-account-to-database.port';
+import { AddAccountToDatabasePortSymbol } from '../../domains/ports/out/persistence/add-account-to-persistence.port';
 import { AddAccountToDatabaseAdapter } from './adapters/add-account-to-database.adapter';
-import { GetAccountByEmailPortSymbol } from '../../domains/ports/out/database/get-account-by-email.port';
+import { GetAccountByEmailPortSymbol } from '../../domains/ports/out/persistence/get-account-by-email.port';
 import { GetAccountByEmailAdapter } from './adapters/get-account-by-email.adapter';
 require('dotenv').config();
 

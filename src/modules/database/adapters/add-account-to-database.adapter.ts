@@ -1,7 +1,7 @@
 import {
   IAddAccountToDatabasePort,
   AddAccountToDatabaseResult,
-} from '../../../domains/ports/out/database/add-account-to-database/add-account-to-database.port';
+} from '../../../domains/ports/out/persistence/add-account-to-persistence.port';
 import { Account } from '../../../domains/entities/account';
 import { IAccountService } from '../services/definitions/account.service';
 

@@ -13,25 +13,30 @@ import { AccountPassword } from '../../value-objects/account/account-password';
 import { CreatedAt } from '../../value-objects/created-at';
 import { UpdatedAt } from '../../value-objects/updated-at';
 import BigNumber from 'bignumber.js';
+import { v4 as uuidv4 } from 'uuid';
 
 describe('ProductTest', () => {
   test('should create Product instance', () => {
-    const password = jwt.sign({},'secret');
+    const sellerId = uuidv4();
+    const sellerPassword = jwt.sign({}, 'secret');
+    const seller = new Account(
+      new Id(sellerId),
+      new AccountFirstName('firstName'),
+      new AccountLastName('lastName'),
+      new AccountEmail('mail@mail.com'),
+      new AccountPassword(sellerPassword),
+      new CreatedAt(new Date()),
+      new UpdatedAt(new Date()),
+    );
+
+    const productId = uuidv4();
     const product = new Product(
-      new Id(1),
+      new Id(productId),
       new ProductName('ProductName'),
       new ProductDescription('ProductDescription'),
       [new ProductPhotoUri('https://test.com/photo')],
       new Price(new BigNumber(1)),
-      new Account(
-        new Id(1),
-        new AccountFirstName('firstName'),
-        new AccountLastName('lastName'),
-        new AccountEmail('mail@mail.com'),
-        new AccountPassword(password),
-        new CreatedAt(new Date()),
-        new UpdatedAt(new Date()),
-      )
+      seller
     );
 
     expect(product).toBeInstanceOf(Product);

@@ -2,7 +2,7 @@ import { AddAccountToDatabaseAdapter } from '../add-account-to-database.adapter'
 import { Test } from '@nestjs/testing';
 import { DatabaseModule } from '../../database.module';
 import { AccountServiceSymbol, IAccountService } from '../../services/definitions/account.service';
-import { AddAccountToDatabaseResult } from '../../../../domains/ports/out/database/add-account-to-database/add-account-to-database.port';
+import { AddAccountToDatabaseResult } from '../../../../domains/ports/out/persistence/add-account-to-persistence.port';
 import { Account } from '../../../../domains/entities/account';
 
 describe('AddAccountToDatabaseAdapterTest', () => {

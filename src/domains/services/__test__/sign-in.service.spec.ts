@@ -1,7 +1,7 @@
 import { SignInService } from '../sign-in.service';
 import { DomainsModule } from '../../domains.module';
 import { Test } from '@nestjs/testing';
-import { GetAccountByEmailPort, GetAccountByEmailPortSymbol } from '../../ports/out/database/get-account-by-email.port';
+import { GetAccountByEmailPort, GetAccountByEmailPortSymbol } from '../../ports/out/persistence/get-account-by-email.port';
 import { GenerateJwtTokenPort, GenerateJwtTokenPortSymbol } from '../../ports/out/auth/generate-jwt-token.port';
 import { ICompareHashPort, ICompareHashPortSymbol } from '../../ports/out/encryptor/compare-hash.port';
 import { Account } from '../../entities/account';

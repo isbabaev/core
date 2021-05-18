@@ -1,4 +1,4 @@
-import { GetAccountByEmailPort } from '../ports/out/database/get-account-by-email.port';
+import { GetAccountByEmailPort } from '../ports/out/persistence/get-account-by-email.port';
 import { GenerateJwtTokenPort } from '../ports/out/auth/generate-jwt-token.port';
 import { ICompareHashPort } from '../ports/out/encryptor/compare-hash.port';
 import { ISignInUseCase } from '../ports/in/sign-in/sign-in.use-case';
