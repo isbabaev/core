@@ -11,7 +11,7 @@ import {
   GetAccountByEmailPort,
   GetAccountByEmailPortSymbol,
 } from './ports/out/persistence/get-account-by-email.port';
-import { GenerateJwtTokenPort, GenerateJwtTokenPortSymbol } from './ports/out/auth/generate-jwt-token.port';
+import { IGenerateJwtTokenPort, GenerateJwtTokenPortSymbol } from './ports/out/auth/generate-jwt-token.port';
 import { ICompareHashPort, ICompareHashPortSymbol } from './ports/out/encryptor/compare-hash.port';
 import { SignInUseCaseSymbol } from './ports/in/sign-in/sign-in.use-case';
 
@@ -26,7 +26,7 @@ const providers: FactoryProvider[] = [
   {
     provide: SignInUseCaseSymbol,
     useFactory: (getAccountByEmailPort: GetAccountByEmailPort,
-                 generateJwtTokenPort: GenerateJwtTokenPort,
+                 generateJwtTokenPort: IGenerateJwtTokenPort,
                  compareHashPort: ICompareHashPort) => {
       return new SignInService(getAccountByEmailPort, generateJwtTokenPort, compareHashPort);
     },

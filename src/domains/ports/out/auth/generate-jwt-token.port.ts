@@ -1,5 +1,5 @@
-export const GenerateJwtTokenPortSymbol = Symbol('GenerateJwtTokenPort');
+export const GenerateJwtTokenPortSymbol = Symbol('IGenerateJwtTokenPort');
 
-export interface GenerateJwtTokenPort {
-  generateJwtToken(email: string): string;
+export interface IGenerateJwtTokenPort {
+  generateJwtToken(id: string): string;
 }

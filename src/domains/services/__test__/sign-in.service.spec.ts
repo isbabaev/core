@@ -1,51 +1,58 @@
 import { SignInService } from '../sign-in.service';
-import { DomainsModule } from '../../domains.module';
-import { Test } from '@nestjs/testing';
-import { GetAccountByEmailPort, GetAccountByEmailPortSymbol } from '../../ports/out/persistence/get-account-by-email.port';
-import { GenerateJwtTokenPort, GenerateJwtTokenPortSymbol } from '../../ports/out/auth/generate-jwt-token.port';
-import { ICompareHashPort, ICompareHashPortSymbol } from '../../ports/out/encryptor/compare-hash.port';
+import {
+  IGetAccountByEmailPort,
+} from '../../ports/out/persistence/get-account-by-email.port';
+import { IGenerateJwtTokenPort } from '../../ports/out/auth/generate-jwt-token.port';
+import { ICompareHashPort } from '../../ports/out/encryptor/compare-hash.port';
 import { Account } from '../../entities/account';
-import { anyString, mock } from 'ts-mockito';
+import { anyString, anything, instance, mock, when } from 'ts-mockito';
+import { SignInCommand } from '../../ports/in/sign-in/sign-in.command';
+import { AccountEmail } from '../../value-objects/account/account-email';
+import { AccountPassword } from '../../value-objects/account/account-password';
+import * as jwt from 'jsonwebtoken';
 
 describe('SignInServiceTest', () => {
   let signInService: SignInService;
-  let getAccountByEmailPort: GetAccountByEmailPort;
+  let getAccountByEmailPort: IGetAccountByEmailPort;
   let compareHashPort: ICompareHashPort;
 
-  beforeAll(async () => {
-    const moduleRef = await Test.createTestingModule({
-      imports: [DomainsModule],
-    }).compile();
+  const mockedToken = '';
+  const email = new AccountEmail('mail@mail.com');
+  const passwordHash = jwt.sign({}, 'secret');
+  const password = new AccountPassword(passwordHash);
+  const signInCommand = new SignInCommand(email, password);
 
-    getAccountByEmailPort = moduleRef.get<GetAccountByEmailPort>(GetAccountByEmailPortSymbol);
-    const generateJwtTokenPort = moduleRef.get<GenerateJwtTokenPort>(GenerateJwtTokenPortSymbol);
-    compareHashPort = moduleRef.get<ICompareHashPort>(ICompareHashPortSymbol);
+  beforeEach(async () => {
+    const generateJwtTokenPort = mock<IGenerateJwtTokenPort>();
+    getAccountByEmailPort = mock<IGetAccountByEmailPort>();
+    compareHashPort = mock<ICompareHashPort>();
 
-    signInService = new SignInService(getAccountByEmailPort, generateJwtTokenPort, compareHashPort);
+    signInService = new SignInService(
+      instance(getAccountByEmailPort),
+      instance(generateJwtTokenPort),
+      instance(compareHashPort),
+    );
 
-    jest.spyOn(getAccountByEmailPort, 'getAccountByEmail')
-      .mockImplementation(() => Promise.resolve(mock(Account)));
-
-    jest.spyOn(generateJwtTokenPort, 'generateJwtToken').mockImplementation(() => anyString());
-
-    jest.spyOn(compareHashPort, 'compareHash').mockImplementation(() => Promise.resolve(true));
+    when(generateJwtTokenPort.generateJwtToken(anything())).thenReturn(mockedToken);
   });
 
   it('should return token', async () => {
-    const token = await signInService.signIn(anyString(), anyString());
+    when(getAccountByEmailPort.getAccountByEmail(anyString())).thenResolve(mock(Account));
+    when(compareHashPort.compareHash(anyString(), anything())).thenResolve(true);
 
-    expect(token).toEqual(anyString());
+    const signInResult = await signInService.signIn(signInCommand);
+
+    expect(signInResult.token).toBe(mockedToken);
   });
 
-  it('should throw error because account not found', async () => {
-    jest.spyOn(getAccountByEmailPort, 'getAccountByEmail').mockImplementation(() => null);
-
-    await expect(signInService.signIn(anyString(), anyString())).rejects.toThrowError();
+  it('should throw error when account not found', async () => {
+    await expect(signInService.signIn(signInCommand)).rejects.toThrowError('Account not found');
   });
 
-  it('should throw error because password invalid', async () => {
-    jest.spyOn(compareHashPort, 'compareHash').mockImplementation(() => Promise.resolve(false));
+  it('should throw error when password invalid', async () => {
+    when(getAccountByEmailPort.getAccountByEmail(anyString())).thenResolve(mock(Account));
+    when(compareHashPort.compareHash(anything(), anyString())).thenResolve(false);
 
-    await expect(signInService.signIn(anyString(), anyString())).rejects.toThrowError();
+    await expect(signInService.signIn(signInCommand)).rejects.toThrowError('Invalid password');
   });
 });
