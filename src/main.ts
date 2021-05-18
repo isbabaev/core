@@ -6,3 +6,5 @@ async function bootstrap() {
   await app.listen(3000);
 }
 bootstrap();
+
+// TODO надо понять под какое поведение писать тесты

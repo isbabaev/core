@@ -1,5 +1,5 @@
 import { IAddAccountToDatabasePort } from '../ports/out/database/add-account-to-database/add-account-to-database.port';
-import { AccountEntity } from '../entities/account.entity';
+import { Account } from '../entities/account';
 import { IHashPort } from '../ports/out/encryptor/hash/hash.port';
 import { ICreateAccountUseCase } from '../ports/in/create-account/create-account.use-case';
 import { ICreateAccountResult } from '../ports/in/create-account/create-account.result';
@@ -16,7 +16,7 @@ export class CreateAccountService implements ICreateAccountUseCase {
     // TODO проверка на наличие емейла в бд
 
     const { hash: hashedPassword } = await this.hashPort.hash(password);
-    const account = await AccountEntity.create(firstName, lastName, email, hashedPassword);
+    const account = await Account.create(firstName, lastName, email, hashedPassword);
 
     return this.addAccountToDatabasePort.addAccountToDatabase(account);
   }

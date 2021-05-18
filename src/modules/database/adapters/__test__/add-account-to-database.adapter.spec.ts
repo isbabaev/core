@@ -3,7 +3,7 @@ import { Test } from '@nestjs/testing';
 import { DatabaseModule } from '../../database.module';
 import { AccountServiceSymbol, IAccountService } from '../../services/definitions/account.service';
 import { AddAccountToDatabaseResult } from '../../../../domains/ports/out/database/add-account-to-database/add-account-to-database.port';
-import { AccountEntity } from '../../../../domains/entities/account.entity';
+import { Account } from '../../../../domains/entities/account';
 
 describe('AddAccountToDatabaseAdapterTest', () => {
   let addAccountToDatabaseAdapter: AddAccountToDatabaseAdapter;
@@ -26,7 +26,7 @@ describe('AddAccountToDatabaseAdapterTest', () => {
   });
 
   it('should return id', async () => {
-    const mockedAccountEntity = await AccountEntity.create(
+    const mockedAccountEntity = await Account.create(
       'test',
       'test',
       'test@mail.com',

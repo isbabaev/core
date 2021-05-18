@@ -2,7 +2,7 @@ import { GetAccountByEmailAdapter } from '../get-account-by-email.adapter';
 import { Test } from '@nestjs/testing';
 import { DatabaseModule } from '../../database.module';
 import { AccountServiceSymbol, IAccountService } from '../../services/definitions/account.service';
-import { AccountEntity } from '../../../../domains/entities/account.entity';
+import { Account } from '../../../../domains/entities/account';
 
 describe('GetAccountByEmailAdapterTest', () => {
   let getAccountByEmailAdapter: GetAccountByEmailAdapter;
@@ -16,7 +16,7 @@ describe('GetAccountByEmailAdapterTest', () => {
     accountService = moduleRef.get<IAccountService>(AccountServiceSymbol);
     getAccountByEmailAdapter = new GetAccountByEmailAdapter(accountService);
 
-    const mockedAccountEntity = await AccountEntity.create(
+    const mockedAccountEntity = await Account.create(
       'test',
       'test',
       'test@mail.com',
@@ -30,6 +30,6 @@ describe('GetAccountByEmailAdapterTest', () => {
   it('should return account', async () => {
     const account = await getAccountByEmailAdapter.getAccountByEmail('test');
 
-    expect(account).toBeInstanceOf(AccountEntity);
+    expect(account).toBeInstanceOf(Account);
   });
 });

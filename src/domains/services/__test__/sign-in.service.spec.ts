@@ -4,7 +4,7 @@ import { Test } from '@nestjs/testing';
 import { GetAccountByEmailPort, GetAccountByEmailPortSymbol } from '../../ports/out/database/get-account-by-email.port';
 import { GenerateJwtTokenPort, GenerateJwtTokenPortSymbol } from '../../ports/out/auth/generate-jwt-token.port';
 import { ICompareHashPort, ICompareHashPortSymbol } from '../../ports/out/encryptor/compare-hash.port';
-import { AccountEntity } from '../../entities/account.entity';
+import { Account } from '../../entities/account';
 import { anyString, mock } from 'ts-mockito';
 
 describe('SignInServiceTest', () => {
@@ -24,7 +24,7 @@ describe('SignInServiceTest', () => {
     signInService = new SignInService(getAccountByEmailPort, generateJwtTokenPort, compareHashPort);
 
     jest.spyOn(getAccountByEmailPort, 'getAccountByEmail')
-      .mockImplementation(() => Promise.resolve(mock(AccountEntity)));
+      .mockImplementation(() => Promise.resolve(mock(Account)));
 
     jest.spyOn(generateJwtTokenPort, 'generateJwtToken').mockImplementation(() => anyString());
 
