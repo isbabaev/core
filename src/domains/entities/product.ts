@@ -11,7 +11,7 @@ export class Product {
   private static _name: ProductName;
   private static description: ProductDescription;
   private static photoUris: ProductPhotoUri[];
-  private static price: Price;
+  private static price: Price; // TODO currency
   private static seller: Account;
 
   get id(): Id {

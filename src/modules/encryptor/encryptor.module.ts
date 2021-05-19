@@ -1,5 +1,5 @@
 import { FactoryProvider, Module } from '@nestjs/common';
-import { HashPortSymbol } from '../../domains/ports/out/encryptor/hash/hash.port';
+import { HashPortSymbol } from '../../domains/ports/out/encryptor/hash.port';
 import { HashAdapter } from './adapters/hash.adapter';
 import { HashServiceSymbol, IHashService } from './services/definitions/hash.service';
 import { HashService } from './services/implementations/hash.service';

@@ -4,7 +4,7 @@ import { CreateAccountUseCaseSymbol } from './ports/in/create-account/create-acc
 import { CreateAccountService } from './services/create-account.service';
 import { IAddAccountToDatabasePort, AddAccountToDatabasePortSymbol } from './ports/out/persistence/add-account-to-persistence.port';
 import { EncryptorModule } from '../modules/encryptor/encryptor.module';
-import { IHashPort, HashPortSymbol } from './ports/out/encryptor/hash/hash.port';
+import { IHashPort, HashPortSymbol } from './ports/out/encryptor/hash.port';
 import { AuthModule } from '../modules/auth/auth.module';
 import { SignInService } from './services/sign-in.service';
 import {

@@ -2,10 +2,10 @@ import {
   IAddAccountToPersistencePort,
 } from '../ports/out/persistence/add-account-to-persistence.port';
 import { Account } from '../entities/account';
-import { IHashPort } from '../ports/out/encryptor/hash/hash.port';
+import { IHashPort } from '../ports/out/encryptor/hash.port';
 import { ICreateAccountUseCase } from '../ports/in/create-account/create-account.use-case';
 import { ICreateAccountResult } from '../ports/in/create-account/create-account.result';
-import { ICreateAccountCommand } from '../ports/in/create-account/create-account.command';
+import { CreateAccountCommand } from '../ports/in/create-account/create-account.command';
 import { IGenerateUuidPort } from '../ports/out/uuid/generate-uuid.port';
 import { Id } from '../value-objects/id';
 import { AccountFirstName } from '../value-objects/account/account-first-name';
@@ -15,18 +15,19 @@ import { AccountPassword } from '../value-objects/account/account-password';
 import { CreatedAt } from '../value-objects/created-at';
 import { UpdatedAt } from '../value-objects/updated-at';
 import { IGetAccountByEmailPort } from '../ports/out/persistence/get-account-by-email.port';
+import { IHashPasswordPort } from '../ports/out/encryptor/hash-password.port';
 
 export class CreateAccountService implements ICreateAccountUseCase {
   constructor(private readonly addAccountToPersistencePort: IAddAccountToPersistencePort,
-              private readonly hashPort: IHashPort,
+              private readonly hashPasswordPort: IHashPasswordPort,
               private readonly generateUuidPort: IGenerateUuidPort,
               private readonly getAccountByEmail: IGetAccountByEmailPort) {
   }
 
-  async createAccount(command: ICreateAccountCommand): Promise<ICreateAccountResult> {
+  async createAccount(command: CreateAccountCommand): Promise<ICreateAccountResult> {
     const { firstName, lastName, email, password } = command;
 
-    const account = await this.getAccountByEmail.getAccountByEmail(email);
+    const account = await this.getAccountByEmail.getAccountByEmail(email.value);
     if (account !== null) {
       throw Error('Account already exists');
     }
@@ -34,12 +35,12 @@ export class CreateAccountService implements ICreateAccountUseCase {
     const idString = this.generateUuidPort.uuidv4();
     const id = new Id(idString);
 
-    const { hash: hashedPassword } = await this.hashPort.hash(password);
+    const hashedPassword = await this.hashPasswordPort.hash(password);
     const newAccount = new Account(
       id,
-      new AccountFirstName(firstName),
-      new AccountLastName(lastName),
-      new AccountEmail(email),
+      new AccountFirstName(firstName.value),
+      new AccountLastName(lastName.value),
+      new AccountEmail(email.value),
       new AccountPassword(hashedPassword),
       new CreatedAt(new Date()),
       new UpdatedAt(new Date()),

@@ -1,10 +1,9 @@
 import { AccountEmail } from '../../../value-objects/account/account-email';
-import { AccountPassword } from '../../../value-objects/account/account-password';
 import * as Joi from 'joi';
 
 export class SignInCommand {
   private _email: AccountEmail;
-  private _password: AccountPassword;
+  private _password: string;
 
   get email(): AccountEmail {
     return this._email;
@@ -15,17 +14,17 @@ export class SignInCommand {
     this._email = value;
   }
 
-  get password(): AccountPassword {
+  get password(): string {
     return this._password;
   }
 
-  set password(value: AccountPassword) {
-    Joi.assert(value, Joi.object().instance(AccountPassword));
+  set password(value: string) {
+    Joi.assert(value, Joi.string());
     this._password = value;
   }
 
   constructor(email: AccountEmail,
-              password: AccountPassword) {
+              password: string) {
     this.email = email;
     this.password = password;
   }
