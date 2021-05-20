@@ -5,10 +5,6 @@ export interface ICreateAccount {
   password: string;
 }
 
-export interface ICreateAccountResult {
-  id: number;
-}
-
 export interface IAccount {
   id: number;
   firstName: string;
