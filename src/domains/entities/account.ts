@@ -8,75 +8,75 @@ import { UpdatedAt } from '../value-objects/updated-at';
 import * as Joi from 'joi';
 
 export class Account {
-  private static id: Id;
-  private static firstName: AccountFirstName;
-  private static lastName: AccountLastName;
-  private static email: AccountEmail;
-  private static password: AccountPassword;
-  private static createdAt: CreatedAt;
-  private static updatedAt: UpdatedAt;
+  private _id: Id;
+  private _firstName: AccountFirstName;
+  private _lastName: AccountLastName;
+  private _email: AccountEmail;
+  private _password: AccountPassword;
+  private _createdAt: CreatedAt;
+  private _updatedAt: UpdatedAt;
 
   get id(): Id {
-    return Account.id;
+    return this._id;
   }
 
   set id(value: Id) {
     Joi.assert(value, Joi.object().instance(Id));
-    Account.id = value;
+    this._id = value;
   }
 
   get firstName(): AccountFirstName {
-    return Account.firstName;
+    return this._firstName;
   }
 
   set firstName(value: AccountFirstName) {
     Joi.assert(value, Joi.object().instance(AccountFirstName));
-    Account.firstName = value;
+    this._firstName = value;
   }
 
   get lastName(): AccountLastName {
-    return Account.lastName;
+    return this._lastName;
   }
 
   set lastName(value: AccountLastName) {
     Joi.assert(value, Joi.object().instance(AccountLastName));
-    Account.lastName = value;
+    this._lastName = value;
   }
 
   get email(): AccountEmail {
-    return Account.email;
+    return this._email;
   }
 
   set email(value: AccountEmail) {
     Joi.assert(value, Joi.object().instance(AccountEmail));
-    Account.email = value;
+    this._email = value;
   }
 
   get password(): AccountPassword {
-    return Account.password;
+    return this._password;
   }
 
   set password(value: AccountPassword) {
     Joi.assert(value, Joi.object().instance(AccountPassword));
-    Account.password = value;
+    this._password = value;
   }
 
   get createdAt(): CreatedAt {
-    return Account.createdAt;
+    return this._createdAt;
   }
 
   set createdAt(value: CreatedAt) {
     Joi.assert(value, Joi.object().instance(CreatedAt));
-    Account.createdAt = value;
+    this._createdAt = value;
   }
 
   get updatedAt(): UpdatedAt {
-    return Account.updatedAt;
+    return this._updatedAt;
   }
 
   set updatedAt(value: UpdatedAt) {
     Joi.assert(value, Joi.object().instance(UpdatedAt));
-    Account.updatedAt = value;
+    this._updatedAt = value;
   }
 
   constructor(id: Id,
