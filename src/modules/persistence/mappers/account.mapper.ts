@@ -1,5 +1,5 @@
 import { Account } from '../../../domains/entities/account';
-import { AccountEntity } from '../entities/account.entity';
+import { AccountPersistence } from '../entities/account-persistence';
 import { Id } from '../../../domains/value-objects/id';
 import { AccountFirstName } from '../../../domains/value-objects/account/account-first-name';
 import { AccountLastName } from '../../../domains/value-objects/account/account-last-name';
@@ -9,7 +9,7 @@ import { CreatedAt } from '../../../domains/value-objects/created-at';
 import { UpdatedAt } from '../../../domains/value-objects/updated-at';
 
 export class AccountMapper {
-  static async mapToDomain(account: AccountEntity): Promise<Account> {
+  static mapToDomain(account: AccountPersistence): Account {
     const { id, firstName, lastName, email, password, createdAt, updatedAt } = account;
     return new Account(
       new Id(id),

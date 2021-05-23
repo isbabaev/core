@@ -7,7 +7,7 @@ import { GetAccountByEmailPortSymbol } from '../../domains/ports/out/persistence
 import { GetAccountByEmailAdapter } from './adapters/get-account-by-email.adapter';
 import { AddAccountToPersistencePortSymbol } from '../../domains/ports/out/persistence/add-account-to-persistence.port';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AccountEntity } from './entities/account.entity';
+import { AccountPersistence } from './entities/account-persistence';
 import { ProductEntity } from './entities/product.entity';
 import { PurchaseEntity } from './entities/purchase.entity';
 
@@ -26,7 +26,7 @@ const exportProviders: ClassProvider[] = [
   imports: [
     TypeOrmModule.forRoot(),
     TypeOrmModule.forFeature([
-      AccountEntity,
+      AccountPersistence,
       ProductEntity,
       PurchaseEntity,
     ]),

@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
   JoinColumn,
 } from 'typeorm';
-import { AccountEntity } from './account.entity';
+import { AccountPersistence } from './account-persistence';
 
 @Entity('products')
 export class ProductEntity {
@@ -26,9 +26,9 @@ export class ProductEntity {
   @Column()
   price: number;
 
-  @ManyToOne(() => AccountEntity)
+  @ManyToOne(() => AccountPersistence)
   @JoinColumn({ name: 'seller_id' })
-  seller: AccountEntity;
+  seller: AccountPersistence;
 
   @CreateDateColumn({name: 'created_at'})
   createdAt: Date;

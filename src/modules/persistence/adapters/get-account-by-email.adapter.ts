@@ -1,16 +1,18 @@
 import { Account } from '../../../domains/entities/account';
-import { AccountMapper } from '../mappers/account.mapper';
 import { IGetAccountByEmailPort } from '../../../domains/ports/out/persistence/get-account-by-email.port';
-import { AccountService } from '../services/account.service';
 import { Injectable } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { AccountMapper } from '../mappers/account.mapper';
+import { AccountPersistence } from '../entities/account-persistence';
 
 @Injectable()
 export class GetAccountByEmailAdapter implements IGetAccountByEmailPort {
-  constructor(private readonly accountService: AccountService) {
+  constructor(private readonly clientProxy: ClientProxy) {
   }
 
   async getAccountByEmail(email: string): Promise<Account | null> {
-    const account = await this.accountService.findOneByEmail(email);
+    const account = await this.clientProxy.send<AccountPersistence>('load-account-by-email', {email})
+      .toPromise();
     return AccountMapper.mapToDomain(account);
   }
 }

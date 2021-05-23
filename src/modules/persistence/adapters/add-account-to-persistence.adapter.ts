@@ -1,20 +1,14 @@
 import { Account } from '../../../domains/entities/account';
-import { AccountService } from '../services/account.service';
 import { IAddAccountToPersistencePort } from '../../../domains/ports/out/persistence/add-account-to-persistence.port';
 import { Injectable } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class AddAccountToPersistenceAdapter implements IAddAccountToPersistencePort {
-  constructor(private readonly accountService: AccountService) {
+  constructor(private readonly clientProxy: ClientProxy) {
   }
 
   addAccountToPersistence(account: Account): Promise<void> {
-    const { firstName, lastName, email, password } = account;
-    return this.accountService.create({
-      firstName: firstName.value,
-      lastName: lastName.value,
-      email: email.value,
-      password: password.value,
-    });
+    return this.clientProxy.send('create-account', account).toPromise();
   }
 }

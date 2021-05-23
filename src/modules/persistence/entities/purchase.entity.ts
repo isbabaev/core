@@ -9,7 +9,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { ProductEntity } from './product.entity';
-import { AccountEntity } from './account.entity';
+import { AccountPersistence } from './account-persistence';
 
 @Entity('purchases')
 export class PurchaseEntity {
@@ -19,9 +19,9 @@ export class PurchaseEntity {
   @ManyToMany(() => ProductEntity)
   products: ProductEntity[];
 
-  @ManyToOne(() => AccountEntity)
+  @ManyToOne(() => AccountPersistence)
   @JoinColumn({name: 'buyer_id'})
-  buyer: AccountEntity;
+  buyer: AccountPersistence;
 
   @Column({name: 'purchase_date'})
   purchaseDate: Date;
