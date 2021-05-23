@@ -11,8 +11,13 @@ export class GetAccountByEmailAdapter implements IGetAccountByEmailPort {
   }
 
   async getAccountByEmail(email: string): Promise<Account | null> {
-    const account = await this.clientProxy.send<AccountPersistence>('load-account-by-email', {email})
+    const account = await this.clientProxy.send<AccountPersistence>('load-account-by-email', { email })
       .toPromise();
+
+    if (account === null) {
+      return null;
+    }
+
     return AccountMapper.mapToDomain(account);
   }
 }

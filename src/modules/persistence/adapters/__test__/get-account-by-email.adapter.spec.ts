@@ -1,6 +1,6 @@
 import { GetAccountByEmailAdapter } from '../get-account-by-email.adapter';
 import { ClientProxy } from '@nestjs/microservices';
-import { anyString, anything, capture, instance, mock, verify, when } from 'ts-mockito';
+import { anyString, anything, capture, instance, mock, when } from 'ts-mockito';
 import { of } from 'rxjs';
 import { AccountPersistence } from '../../entities/account-persistence';
 import { Account } from '../../../../domains/entities/account';
@@ -39,14 +39,33 @@ describe('GetAccountByEmailAdapterTest', () => {
     expect(sendArguments[1]).toEqual({email});
   });
 
-  test('should return account', async () => {
+  test('account should be instance of Account', async () => {
     when(clientProxy.send(anyString(), anything())).thenReturn(of(mockedAccountPersistence));
 
     const account = await getAccountByEmailAdapter.getAccountByEmail('');
 
-    expect(account).toEqual(mockedAccountPersistence);
     expect(account).toBeInstanceOf(Account);
   });
 
-  // TODO should return null
+  test('mockedAccountPersistence and account should have same values', async () => {
+    when(clientProxy.send(anyString(), anything())).thenReturn(of(mockedAccountPersistence));
+
+    const account = await getAccountByEmailAdapter.getAccountByEmail('');
+
+    expect(account.id.value).toBe(mockedAccountPersistence.id);
+    expect(account.firstName.value).toBe(mockedAccountPersistence.firstName);
+    expect(account.lastName.value).toBe(mockedAccountPersistence.lastName);
+    expect(account.email.value).toBe(mockedAccountPersistence.email);
+    expect(account.password.value).toBe(mockedAccountPersistence.password);
+    expect(account.createdAt.value).toBe(mockedAccountPersistence.createdAt);
+    expect(account.updatedAt.value).toBe(mockedAccountPersistence.updatedAt);
+  });
+
+  test('should return null when method send of clientProxy returns null', async () => {
+    when(clientProxy.send(anyString(), anything())).thenReturn(of(null));
+
+    const account = await getAccountByEmailAdapter.getAccountByEmail('');
+
+    expect(account).toBeNull();
+  });
 });
