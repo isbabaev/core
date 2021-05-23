@@ -3,8 +3,8 @@ import {
   Module,
 } from '@nestjs/common';
 import { AddAccountToPersistenceAdapter } from './adapters/add-account-to-persistence.adapter';
-import { GetAccountByEmailPortSymbol } from '../../domains/ports/out/persistence/get-account-by-email.port';
-import { GetAccountByEmailAdapter } from './adapters/get-account-by-email.adapter';
+import { LoadAccountByEmailPortSymbol } from '../../domains/ports/out/persistence/load-account-by-email.port';
+import { LoadAccountByEmailAdapter } from './adapters/load-account-by-email.adapter';
 import { AddAccountToPersistencePortSymbol } from '../../domains/ports/out/persistence/add-account-to-persistence.port';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AccountPersistence } from './entities/account-persistence';
@@ -17,8 +17,8 @@ const exportProviders: ClassProvider[] = [
     useClass: AddAccountToPersistenceAdapter,
   },
   {
-    provide: GetAccountByEmailPortSymbol,
-    useClass: GetAccountByEmailAdapter,
+    provide: LoadAccountByEmailPortSymbol,
+    useClass: LoadAccountByEmailAdapter,
   },
 ];
 

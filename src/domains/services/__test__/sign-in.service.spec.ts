@@ -1,7 +1,7 @@
 import { SignInService } from '../sign-in.service';
 import {
-  IGetAccountByEmailPort,
-} from '../../ports/out/persistence/get-account-by-email.port';
+  ILoadAccountByEmailPort,
+} from '../../ports/out/persistence/load-account-by-email.port';
 import { IGenerateJwtTokenPort } from '../../ports/out/auth/generate-jwt-token.port';
 import { Account } from '../../entities/account';
 import { anyString, anything, instance, mock, when } from 'ts-mockito';
@@ -13,7 +13,7 @@ import { IComparePasswordsPort } from '../../ports/out/encryptor/compare-passwor
 
 describe('SignInServiceTest', () => {
   let signInService: SignInService;
-  let getAccountByEmailPort: IGetAccountByEmailPort;
+  let getAccountByEmailPort: ILoadAccountByEmailPort;
   let comparePasswordsPort: IComparePasswordsPort;
 
   const mockedToken = '';
@@ -24,7 +24,7 @@ describe('SignInServiceTest', () => {
 
   beforeEach(async () => {
     const generateJwtTokenPort = mock<IGenerateJwtTokenPort>();
-    getAccountByEmailPort = mock<IGetAccountByEmailPort>();
+    getAccountByEmailPort = mock<ILoadAccountByEmailPort>();
     comparePasswordsPort = mock<IComparePasswordsPort>();
 
     signInService = new SignInService(
@@ -37,7 +37,7 @@ describe('SignInServiceTest', () => {
   });
 
   it('should return token', async () => {
-    when(getAccountByEmailPort.getAccountByEmail(anyString())).thenResolve(mock(Account));
+    when(getAccountByEmailPort.loadAccountByEmail(anyString())).thenResolve(mock(Account));
     when(comparePasswordsPort.compareHash(anyString(), anything())).thenResolve(true);
 
     const signInResult = await signInService.signIn(signInCommand);
@@ -50,7 +50,7 @@ describe('SignInServiceTest', () => {
   });
 
   it('should throw error when password invalid', async () => {
-    when(getAccountByEmailPort.getAccountByEmail(anyString())).thenResolve(mock(Account));
+    when(getAccountByEmailPort.loadAccountByEmail(anyString())).thenResolve(mock(Account));
     when(comparePasswordsPort.compareHash(anything(), anyString())).thenResolve(false);
 
     await expect(signInService.signIn(signInCommand)).rejects.toThrowError('Invalid password');

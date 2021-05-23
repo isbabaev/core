@@ -6,8 +6,8 @@ import { EncryptorModule } from '../modules/encryptor/encryptor.module';
 import { AuthModule } from '../modules/auth/auth.module';
 import { SignInService } from './services/sign-in.service';
 import {
-  GetAccountByEmailPortSymbol, IGetAccountByEmailPort,
-} from './ports/out/persistence/get-account-by-email.port';
+  LoadAccountByEmailPortSymbol, ILoadAccountByEmailPort,
+} from './ports/out/persistence/load-account-by-email.port';
 import { IGenerateJwtTokenPort, GenerateJwtTokenPortSymbol } from './ports/out/auth/generate-jwt-token.port';
 import { SignInUseCaseSymbol } from './ports/in/sign-in/sign-in.use-case';
 import {
@@ -24,30 +24,30 @@ const providers: FactoryProvider[] = [
     useFactory: (addAccountToPersistencePort: IAddAccountToPersistencePort,
                  hashPasswordPort: IHashPasswordPort,
                  generateUuidPort: IGenerateUuidPort,
-                 getAccountByEmail: IGetAccountByEmailPort) => {
+                 loadAccountByEmailPort: ILoadAccountByEmailPort) => {
       return new CreateAccountService(
         addAccountToPersistencePort,
         hashPasswordPort,
         generateUuidPort,
-        getAccountByEmail,
+        loadAccountByEmailPort,
       );
     },
     inject: [
       AddAccountToPersistencePortSymbol,
       HashPasswordPortSymbol,
       GenerateUuidPortSymbol,
-      GetAccountByEmailPortSymbol,
+      LoadAccountByEmailPortSymbol,
     ],
   },
   {
     provide: SignInUseCaseSymbol,
-    useFactory: (getAccountByEmailPort: IGetAccountByEmailPort,
+    useFactory: (loadAccountByEmailPort: ILoadAccountByEmailPort,
                  generateJwtTokenPort: IGenerateJwtTokenPort,
                  comparePasswordsPort: IComparePasswordsPort) => {
-      return new SignInService(getAccountByEmailPort, generateJwtTokenPort, comparePasswordsPort);
+      return new SignInService(loadAccountByEmailPort, generateJwtTokenPort, comparePasswordsPort);
     },
     inject: [
-      GetAccountByEmailPortSymbol,
+      LoadAccountByEmailPortSymbol,
       GenerateJwtTokenPortSymbol,
       IComparePasswordsSymbol,
     ],

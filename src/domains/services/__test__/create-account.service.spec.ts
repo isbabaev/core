@@ -4,7 +4,7 @@ import { IHashPort } from '../../ports/out/encryptor/hash.port';
 import { IAddAccountToPersistencePort } from '../../ports/out/persistence/add-account-to-persistence.port';
 import { v4 as uuidv4 } from 'uuid';
 import { IGenerateUuidPort } from '../../ports/out/uuid/generate-uuid.port';
-import { IGetAccountByEmailPort } from '../../ports/out/persistence/get-account-by-email.port';
+import { ILoadAccountByEmailPort } from '../../ports/out/persistence/load-account-by-email.port';
 import { Id } from '../../value-objects/id';
 import * as jwt from 'jsonwebtoken';
 import { Account } from '../../entities/account';
@@ -15,7 +15,7 @@ import { AccountEmail } from '../../value-objects/account/account-email';
 
 describe('CreateAccountServiceTest', () => {
   let createAccountService: CreateAccountService;
-  let mockedGetAccountByEmailPort: IGetAccountByEmailPort;
+  let mockedGetAccountByEmailPort: ILoadAccountByEmailPort;
 
   beforeAll(async () => {
     const mockedAddAccountToPersistencePort = mock<IAddAccountToPersistencePort>();
@@ -26,7 +26,7 @@ describe('CreateAccountServiceTest', () => {
 
     const generateUuidPort: IGenerateUuidPort = { uuidv4 };
 
-    mockedGetAccountByEmailPort = mock<IGetAccountByEmailPort>();
+    mockedGetAccountByEmailPort = mock<ILoadAccountByEmailPort>();
 
     createAccountService = new CreateAccountService(
       instance(mockedAddAccountToPersistencePort),
@@ -50,7 +50,7 @@ describe('CreateAccountServiceTest', () => {
   });
 
   it('should throw error when account exists in persistence', async () => {
-    when(mockedGetAccountByEmailPort.getAccountByEmail(anyString())).thenResolve(mock(Account));
+    when(mockedGetAccountByEmailPort.loadAccountByEmail(anyString())).thenResolve(mock(Account));
 
     const createAccountCommand = new CreateAccountCommand(
       new AccountFirstName('Test'),
