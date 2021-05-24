@@ -1,4 +1,4 @@
-import { ProductEntity } from './product.entity';
+import { ProductPersistence } from './product-persistence';
 
 export class AccountPersistence {
   id: string;
@@ -6,7 +6,7 @@ export class AccountPersistence {
   lastName: string;
   email: string;
   password: string;
-  products: ProductEntity[];
+  products: ProductPersistence[];
   createdAt: Date;
   updatedAt: Date;
 
@@ -15,7 +15,7 @@ export class AccountPersistence {
               lastName: string,
               email: string,
               password: string,
-              products: ProductEntity[],
+              products: ProductPersistence[],
               createdAt: Date,
               updatedAt: Date) {
     this.id = id;

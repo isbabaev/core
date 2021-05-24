@@ -37,7 +37,7 @@ describe('SignInServiceTest', () => {
   });
 
   it('should return token', async () => {
-    when(getAccountByEmailPort.loadAccountByEmail(anyString())).thenResolve(mock(Account));
+    when(getAccountByEmailPort.loadAccountByEmail(anything())).thenResolve(mock(Account));
     when(comparePasswordsPort.comparePasswords(anyString(), anything())).thenResolve(true);
 
     const signInResult = await signInService.signIn(signInCommand);
@@ -50,7 +50,7 @@ describe('SignInServiceTest', () => {
   });
 
   it('should throw error when password invalid', async () => {
-    when(getAccountByEmailPort.loadAccountByEmail(anyString())).thenResolve(mock(Account));
+    when(getAccountByEmailPort.loadAccountByEmail(anything())).thenResolve(mock(Account));
     when(comparePasswordsPort.comparePasswords(anything(), anyString())).thenResolve(false);
 
     await expect(signInService.signIn(signInCommand)).rejects.toThrowError('Invalid password');

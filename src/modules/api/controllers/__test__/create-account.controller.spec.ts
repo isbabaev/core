@@ -8,6 +8,7 @@ describe('CreateAccountControllerTest', () => {
   let createAccountController: CreateAccountController;
   let createAccountUseCase: ICreateAccountUseCase;
   let createAccountData: CreateAccountDto;
+  let mockedId: Id;
 
   beforeAll(() => {
     createAccountUseCase = mock<ICreateAccountUseCase>();
@@ -19,6 +20,9 @@ describe('CreateAccountControllerTest', () => {
       'test@mail.com',
       'password'
     );
+
+    mockedId = new Id('fbb3fb5f-6d83-456d-b2ba-198db719641a');
+    when(createAccountUseCase.createAccount(anything())).thenResolve({id: mockedId});
   });
 
   test('should call method createAccount of createAccountUseCase', async() => {
@@ -32,9 +36,6 @@ describe('CreateAccountControllerTest', () => {
   });
 
   test('should return id', async () => {
-    const mockedId = new Id('fbb3fb5f-6d83-456d-b2ba-198db719641a');
-    when(createAccountUseCase.createAccount(anything())).thenResolve({id: mockedId});
-
     const createAccountResult = await createAccountController.createAccount(createAccountData);
 
     expect(createAccountResult.id).toBe(mockedId.value);
