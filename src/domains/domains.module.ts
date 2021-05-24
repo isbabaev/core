@@ -16,7 +16,7 @@ import {
 } from './ports/out/persistence/add-account-to-persistence.port';
 import { HashPasswordPortSymbol, IHashPasswordPort } from './ports/out/encryptor/hash-password.port';
 import { GenerateUuidPortSymbol, IGenerateUuidPort } from './ports/out/uuid/generate-uuid.port';
-import { IComparePasswordsPort, IComparePasswordsSymbol } from './ports/out/encryptor/compare-passwords.port';
+import { IComparePasswordsPort, ComparePasswordsSymbol } from './ports/out/encryptor/compare-passwords.port';
 
 const providers: FactoryProvider[] = [
   {
@@ -49,7 +49,7 @@ const providers: FactoryProvider[] = [
     inject: [
       LoadAccountByEmailPortSymbol,
       GenerateJwtTokenPortSymbol,
-      IComparePasswordsSymbol,
+      ComparePasswordsSymbol,
     ],
   },
 ];

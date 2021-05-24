@@ -1,7 +1,8 @@
 import { AccountPassword } from '../../../value-objects/account/account-password';
 
-export const IComparePasswordsSymbol = Symbol('IComparePasswordsPort');
+export const ComparePasswordsSymbol = Symbol('IComparePasswordsPort');
 
 export interface IComparePasswordsPort {
-  compareHash(password: string, hashedPassword: AccountPassword): Promise<boolean>;
+  // TODO думаю тут string не должен быть, надо добавить какой-нибудь тип пароля
+  comparePasswords(password: string, hashedPassword: AccountPassword): Promise<boolean>;
 }

@@ -1,38 +1,29 @@
-import { FactoryProvider, Module } from '@nestjs/common';
-import { HashPortSymbol } from '../../domains/ports/out/encryptor/hash.port';
-import { HashAdapter } from './adapters/hash.adapter';
-import { HashServiceSymbol, IHashService } from './services/definitions/hash.service';
-import { HashService } from './services/implementations/hash.service';
-import { ICompareHashPortSymbol } from '../../domains/ports/out/encryptor/compare-hash.port';
-import { CompareHashAdapter } from './adapters/compare-hash.adapter';
+import { ClassProvider, Module } from '@nestjs/common';
+import { HashPasswordPortSymbol } from '../../domains/ports/out/encryptor/hash-password.port';
+import { HashPasswordAdapter } from './adapters/hash-password.adapter';
+import { ComparePasswordsSymbol } from '../../domains/ports/out/encryptor/compare-passwords.port';
+import { ComparePasswordsAdapter } from './adapters/compare-passwords.adapter';
+import { HashService } from './services/hash.service';
 
-const exportProviders: FactoryProvider[] = [
+const exportProviders: ClassProvider[] = [
   {
-    provide: HashPortSymbol,
-    useFactory: (hashService: IHashService) => {
-      return new HashAdapter(hashService);
-    },
-    inject: [HashServiceSymbol]
+    provide: HashPasswordPortSymbol,
+    useClass: HashPasswordAdapter,
   },
   {
-    provide: ICompareHashPortSymbol,
-    useFactory: (hashService: IHashService) => {
-      return new CompareHashAdapter(hashService);
-    },
-    inject: [HashServiceSymbol]
-  }
+    provide: ComparePasswordsSymbol,
+    useClass: ComparePasswordsAdapter,
+  },
 ];
 
 @Module({
   providers: [
-    {
-      provide: HashServiceSymbol,
-      useClass: HashService
-    },
-    ...exportProviders
+    HashService,
+    ...exportProviders,
   ],
   exports: [
-    ...exportProviders
-  ]
+    ...exportProviders,
+  ],
 })
-export class EncryptorModule { }
+export class EncryptorModule {
+}
