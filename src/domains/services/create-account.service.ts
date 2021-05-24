@@ -7,9 +7,6 @@ import { ICreateAccountResult } from '../ports/in/create-account/create-account.
 import { CreateAccountCommand } from '../ports/in/create-account/create-account.command';
 import { IGenerateUuidPort } from '../ports/out/uuid/generate-uuid.port';
 import { Id } from '../value-objects/id';
-import { AccountFirstName } from '../value-objects/account/account-first-name';
-import { AccountLastName } from '../value-objects/account/account-last-name';
-import { AccountEmail } from '../value-objects/account/account-email';
 import { AccountPassword } from '../value-objects/account/account-password';
 import { CreatedAt } from '../value-objects/created-at';
 import { UpdatedAt } from '../value-objects/updated-at';
@@ -37,9 +34,9 @@ export class CreateAccountService implements ICreateAccountUseCase {
     const hashedPassword = await this.hashPasswordPort.hash(password);
     const newAccount = new Account(
       id,
-      new AccountFirstName(firstName.value), // TODO зачем заново создавать объект?
-      new AccountLastName(lastName.value),
-      new AccountEmail(email.value),
+      firstName,
+      lastName,
+      email,
       new AccountPassword(hashedPassword),
       new CreatedAt(new Date()),
       new UpdatedAt(new Date()),
