@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 import { DomainsModule } from '../../domains/domains.module';
-import { AccountController } from './controllers/account.controller';
+import { CreateAccountController } from './controllers/create-account.controller';
+import { SignInController } from './controllers/sign-in.controller';
 
 @Module({
   imports: [DomainsModule],
   controllers: [
-    AccountController,
+    CreateAccountController,
+    SignInController,
   ]
 })
 export class ApiModule {}
