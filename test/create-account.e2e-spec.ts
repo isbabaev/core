@@ -12,11 +12,14 @@ import {
 } from '../src/domains/ports/out/persistence/load-account-by-email.port';
 import { CreateAccountDto } from '../src/modules/api/dto/create-account.dto';
 import * as request from 'supertest';
+import { ICreateAccountResult } from '../src/domains/ports/in/create-account/create-account.result';
+import * as Joi from 'joi';
 
 describe('CreateAccountE2eTest', () => {
   let app: INestApplication;
   let mockedAddAccountToPersistencePort: IAddAccountToPersistencePort;
   let mockedLoadAccountToEmailPort: ILoadAccountByEmailPort;
+  let createAccountData: CreateAccountDto;
 
   beforeAll(async () => {
     mockedAddAccountToPersistencePort = mock<IAddAccountToPersistencePort>();
@@ -35,16 +38,16 @@ describe('CreateAccountE2eTest', () => {
 
     app = moduleRef.createNestApplication();
     await app.init();
-  });
 
-  test('should call method addAccountToPersistence of mockedAddAccountToPersistencePort', async () => {
-    const createAccountData = new CreateAccountDto(
+    createAccountData = new CreateAccountDto(
       'Test',
       'Test',
       'test@mail.com',
       'password',
     );
+  });
 
+  test('should call method addAccountToPersistence of mockedAddAccountToPersistencePort', async () => {
     await request(app.getHttpServer())
       .post('/create-account')
       .send(createAccountData)
@@ -55,4 +58,15 @@ describe('CreateAccountE2eTest', () => {
     expect(addAccountToPersistenceArguments[0].lastName.value).toBe(createAccountData.lastName);
     expect(addAccountToPersistenceArguments[0].email.value).toBe(createAccountData.email);
   });
+
+  test('should return Id', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/create-account')
+      .send(createAccountData)
+      .expect(HttpStatus.CREATED);
+
+    const responseBody = response.body as ICreateAccountResult;
+    Joi.assert(responseBody.id, Joi.string().uuid().required());
+  });
+
 });

@@ -20,3 +20,7 @@ export class CreateAccountDto {
     this.password = password;
   }
 }
+
+export class CreateAccountResultDto {
+  id: string;
+}
