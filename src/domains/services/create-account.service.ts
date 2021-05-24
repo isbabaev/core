@@ -31,7 +31,7 @@ export class CreateAccountService implements ICreateAccountUseCase {
       throw Error('Account already exists');
     }
 
-    const idString = this.generateUuidPort.uuidv4();
+    const idString = this.generateUuidPort.generateUuid();
     const id = new Id(idString);
 
     const hashedPassword = await this.hashPasswordPort.hash(password);

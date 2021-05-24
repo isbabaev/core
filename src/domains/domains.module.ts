@@ -17,6 +17,7 @@ import {
 import { HashPasswordPortSymbol, IHashPasswordPort } from './ports/out/encryptor/hash-password.port';
 import { GenerateUuidPortSymbol, IGenerateUuidPort } from './ports/out/uuid/generate-uuid.port';
 import { IComparePasswordsPort, ComparePasswordsSymbol } from './ports/out/encryptor/compare-passwords.port';
+import { UuidModule } from '../modules/uuid/uuid.module';
 
 const providers: FactoryProvider[] = [
   {
@@ -59,6 +60,7 @@ const providers: FactoryProvider[] = [
     PersistenceModule,
     EncryptorModule,
     AuthModule,
+    UuidModule,
   ],
   providers,
   exports: [...providers],
