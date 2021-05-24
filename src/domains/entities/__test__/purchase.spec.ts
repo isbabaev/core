@@ -20,13 +20,12 @@ import { v4 as uuidv4 } from 'uuid';
 describe('PurchaseTest', () => {
   test('should create Purchase instance', () => {
     const sellerId = uuidv4();
-    const sellerPassword = jwt.sign({}, 'secret');
     const seller = new Account(
       new Id(sellerId),
       new AccountFirstName('firstName'),
       new AccountLastName('lastName'),
       new AccountEmail('mail@mail.com'),
-      new AccountPassword(sellerPassword),
+      new AccountPassword('password'),
       new CreatedAt(new Date()),
       new UpdatedAt(new Date()),
     );
@@ -42,13 +41,12 @@ describe('PurchaseTest', () => {
     );
 
     const buyerId = uuidv4();
-    const buyerPassword = jwt.sign({}, 'secret');
     const buyer = new Account(
       new Id(buyerId),
       new AccountFirstName('firstName'),
       new AccountLastName('lastName'),
       new AccountEmail('mail@mail.com'),
-      new AccountPassword(buyerPassword),
+      new AccountPassword('password'),
       new CreatedAt(new Date()),
       new UpdatedAt(new Date()),
     );

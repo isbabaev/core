@@ -1,4 +1,3 @@
-import * as jwt from 'jsonwebtoken';
 import { Account } from '../account';
 import { Id } from '../../value-objects/id';
 import { Product } from '../product';
@@ -18,13 +17,12 @@ import { v4 as uuidv4 } from 'uuid';
 describe('ProductTest', () => {
   test('should create Product instance', () => {
     const sellerId = uuidv4();
-    const sellerPassword = jwt.sign({}, 'secret');
     const seller = new Account(
       new Id(sellerId),
       new AccountFirstName('firstName'),
       new AccountLastName('lastName'),
       new AccountEmail('mail@mail.com'),
-      new AccountPassword(sellerPassword),
+      new AccountPassword('password'),
       new CreatedAt(new Date()),
       new UpdatedAt(new Date()),
     );

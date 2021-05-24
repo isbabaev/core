@@ -18,7 +18,6 @@ import { AccountEmail } from '../../value-objects/account/account-email';
 import { AccountPassword } from '../../value-objects/account/account-password';
 import { CreatedAt } from '../../value-objects/created-at';
 import { UpdatedAt } from '../../value-objects/updated-at';
-import * as jwt from 'jsonwebtoken';
 
 describe('CreateProductServiceTest', () => {
   let createProductService: CreateProductService;
@@ -43,13 +42,12 @@ describe('CreateProductServiceTest', () => {
       sellerId,
     );
 
-    const sellerPassword = jwt.sign({}, 'secret');
     when(mockedLoadAccountByIdPort.loadAccountById(sellerId)).thenResolve(new Account(
       sellerId,
       new AccountFirstName('firstName'),
       new AccountLastName('lastName'),
       new AccountEmail('mail@mail.com'),
-      new AccountPassword(sellerPassword),
+      new AccountPassword('password'),
       new CreatedAt(new Date()),
       new UpdatedAt(new Date()),
     ));

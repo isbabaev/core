@@ -3,7 +3,7 @@ import * as Joi from 'joi';
 
 export class AccountPassword extends BaseValueObject<string> {
   constructor(value: string) {
-    Joi.assert(value, Joi.string().regex(/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_.+/=]*$/).required());
+    Joi.assert(value, Joi.string().required());
     super(value);
   }
 }
