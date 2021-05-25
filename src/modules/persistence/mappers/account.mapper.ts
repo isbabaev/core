@@ -9,8 +9,8 @@ import { CreatedAt } from '../../../domains/value-objects/created-at';
 import { UpdatedAt } from '../../../domains/value-objects/updated-at';
 
 export class AccountMapper {
-  static mapToDomain(account: AccountPersistence): Account {
-    const { id, firstName, lastName, email, password, createdAt, updatedAt } = account;
+  static mapToDomain(accountPersistence: AccountPersistence): Account {
+    const { id, firstName, lastName, email, password, createdAt, updatedAt } = accountPersistence;
     return new Account(
       new Id(id),
       new AccountFirstName(firstName),
@@ -18,7 +18,21 @@ export class AccountMapper {
       new AccountEmail(email),
       new AccountPassword(password),
       new CreatedAt(createdAt),
-      new UpdatedAt(updatedAt)
+      new UpdatedAt(updatedAt),
+    );
+  }
+
+  static mapToPersistence(account: Account): AccountPersistence {
+    const { id, firstName, lastName, email, password, createdAt, updatedAt } = account;
+    return new AccountPersistence(
+      id.value,
+      firstName.value,
+      lastName.value,
+      email.value,
+      password.value,
+      [],
+      createdAt.value,
+      updatedAt.value,
     );
   }
 }

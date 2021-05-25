@@ -2,6 +2,7 @@ import { Account } from '../../../domains/entities/account';
 import { IAddAccountToPersistencePort } from '../../../domains/ports/out/persistence/add-account-to-persistence.port';
 import { Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { AccountMapper } from '../mappers/account.mapper';
 
 @Injectable()
 export class AddAccountToPersistenceAdapter implements IAddAccountToPersistencePort {
@@ -9,6 +10,7 @@ export class AddAccountToPersistenceAdapter implements IAddAccountToPersistenceP
   }
 
   addAccountToPersistence(account: Account): Promise<void> {
-    return this.clientProxy.send('create-account', account).toPromise();
+    const accountPersistence = AccountMapper.mapToPersistence(account);
+    return this.clientProxy.send('create-account', accountPersistence).toPromise();
   }
 }
