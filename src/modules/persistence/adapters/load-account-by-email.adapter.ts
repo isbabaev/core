@@ -12,8 +12,10 @@ export class LoadAccountByEmailAdapter implements ILoadAccountByEmailPort {
   }
 
   async loadAccountByEmail(email: AccountEmail): Promise<Account | null> {
-    const account = await this.clientProxy.send<AccountPersistence>('load-account-by-email', { email })
-      .toPromise();
+    const account = await this.clientProxy.send<AccountPersistence>(
+      'load-account-by-email',
+      { email: email.value },
+    ).toPromise();
 
     if (account === null) {
       return null;

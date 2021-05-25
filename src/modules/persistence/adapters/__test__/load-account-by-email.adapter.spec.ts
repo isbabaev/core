@@ -38,7 +38,7 @@ describe('LoadAccountByEmailAdapterTest', () => {
 
     const sendArguments = capture(clientProxy.send).first();
     expect(sendArguments[0]).toBe('load-account-by-email');
-    expect(sendArguments[1]).toEqual({email: mockedEmail});
+    expect(sendArguments[1]).toEqual({email: mockedEmail.value});
   });
 
   test('account should be instance of Account', async () => {
