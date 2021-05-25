@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Inject, Post } from '@nestjs/common';
 import {
   CreateAccountUseCaseSymbol,
   ICreateAccountUseCase,
@@ -8,6 +8,7 @@ import { AccountFirstName } from '../../../domains/value-objects/account/account
 import { AccountLastName } from '../../../domains/value-objects/account/account-last-name';
 import { AccountEmail } from '../../../domains/value-objects/account/account-email';
 import { CreateAccountDto, CreateAccountResultDto } from '../dto/create-account.dto';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('create-account')
 export class CreateAccountController {
@@ -16,6 +17,7 @@ export class CreateAccountController {
   }
 
   @Post()
+  @ApiResponse({status: HttpStatus.CREATED, type: CreateAccountResultDto})
   async createAccount(@Body() createAccountData: CreateAccountDto): Promise<CreateAccountResultDto> {
     const { firstName, lastName, email, password } = createAccountData;
     const createAccountResult = await this.createAccountUseCase.createAccount(
