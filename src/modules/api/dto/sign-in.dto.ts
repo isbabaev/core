@@ -12,3 +12,7 @@ export class SignInDto {
     this.password = password;
   }
 }
+
+export class SignInResultDto {
+  token: string;
+}

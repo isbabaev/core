@@ -4,7 +4,7 @@ import { IAuthService, IAuthServiceSymbol } from './services/definitions/auth.se
 import { GenerateJwtTokenAdapter } from './adapters/generate-jwt-token.adapter';
 import { AuthService } from './services/implementations/auth.service';
 import { GenerateJwtTokenPortSymbol } from '../../domains/ports/out/auth/generate-jwt-token.port';
-require('dotenv').config();
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 const exportProviders: FactoryProvider[] = [
   {
@@ -13,14 +13,18 @@ const exportProviders: FactoryProvider[] = [
       return new GenerateJwtTokenAdapter(authService);
     },
     inject: [IAuthServiceSymbol],
-  }
+  },
 ];
 
 @Module({
   imports: [
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1d' },
+    JwtModule.registerAsync({
+      imports: [ConfigModule.forRoot()],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get('JWT_SECRET'),
+        signOptions: { expiresIn: '1d' },
+      }),
+      inject: [ConfigService],
     }),
   ],
   providers: [
@@ -28,11 +32,11 @@ const exportProviders: FactoryProvider[] = [
       provide: IAuthServiceSymbol,
       useClass: AuthService,
     },
-    ...exportProviders
+    ...exportProviders,
   ],
   exports: [
-    ...exportProviders
-  ]
+    ...exportProviders,
+  ],
 })
 export class AuthModule {
 }

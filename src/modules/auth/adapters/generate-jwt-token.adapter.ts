@@ -7,6 +7,6 @@ export class GenerateJwtTokenAdapter implements IGenerateJwtTokenPort {
   }
 
   generateJwtToken(id: Id): string {
-    return this.authService.generateJwtToken(id.value);
+    return this.authService.generateJwtToken({value: id.value});
   }
 }
