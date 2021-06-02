@@ -31,12 +31,11 @@ describe('CreateProductControllerTest', () => {
     await createProductController.createProduct(createProductData);
 
     const createProductArguments = capture(mockedCreateProductUseCase.createProduct).first();
-    const createProductFirstArgument = createProductArguments[0] as CreateProductCommand;
-    expect(createProductFirstArgument.name.value).toBe(createProductData.name);
-    expect(createProductFirstArgument.description.value).toBe(createProductData.description);
-    expect(createProductFirstArgument.photoUris[0].value).toBe(createProductData.photoUris[0]);
-    expect(createProductFirstArgument.price.value.valueOf()).toBe(createProductData.price.toString());
-    expect(createProductFirstArgument.sellerId.value).toBe(createProductData.sellerId);
+    expect(createProductArguments[0].name.value).toBe(createProductData.name);
+    expect(createProductArguments[0].description.value).toBe(createProductData.description);
+    expect(createProductArguments[0].photoUris[0].value).toBe(createProductData.photoUris[0]);
+    expect(createProductArguments[0].price.value.valueOf()).toBe(createProductData.price.toString());
+    expect(createProductArguments[0].sellerId.value).toBe(createProductData.sellerId);
   });
 
   test('should return id', async () => {
