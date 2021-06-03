@@ -1,6 +1,9 @@
-import { Controller, Inject } from '@nestjs/common';
+import { Controller, HttpStatus, Inject, Post } from '@nestjs/common';
 import { CreateProductDto, CreateProductResultDto } from '../dto/create-product.dto';
-import { ICreateProductUseCase } from '../../../domains/ports/in/create-product/create-product.use-case';
+import {
+  CreateProductUseCaseSymbol,
+  ICreateProductUseCase,
+} from '../../../domains/ports/in/create-product/create-product.use-case';
 import { CreateProductCommand } from '../../../domains/ports/in/create-product/create-product.command';
 import { ProductName } from '../../../domains/value-objects/product/product-name';
 import { ProductDescription } from '../../../domains/value-objects/product/product-description';
@@ -8,12 +11,16 @@ import { ProductPhotoUri } from '../../../domains/value-objects/product/product-
 import BigNumber from 'bignumber.js';
 import { Id } from '../../../domains/value-objects/id';
 import { Price } from '../../../domains/value-objects/price';
+import { ApiResponse } from '@nestjs/swagger';
 
-// @Controller('/create-product')
+@Controller('/create-product')
 export class CreateProductController {
-  constructor(private readonly createProductUseCase: ICreateProductUseCase) {
+  constructor(@Inject(CreateProductUseCaseSymbol)
+              private readonly createProductUseCase: ICreateProductUseCase) {
   }
 
+  @Post()
+  @ApiResponse({status: HttpStatus.CREATED, type: CreateProductResultDto})
   async createProduct(createProductData: CreateProductDto): Promise<CreateProductResultDto> {
     const { name, description, photoUris, price, sellerId } = createProductData;
     const productPhotoUris = photoUris.map(photoUri => new ProductPhotoUri(photoUri));

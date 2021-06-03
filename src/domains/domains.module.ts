@@ -18,6 +18,13 @@ import { HashPasswordPortSymbol, IHashPasswordPort } from './ports/out/encryptor
 import { GenerateUuidPortSymbol, IGenerateUuidPort } from './ports/out/uuid/generate-uuid.port';
 import { IComparePasswordsPort, ComparePasswordsSymbol } from './ports/out/encryptor/compare-passwords.port';
 import { UuidModule } from '../modules/uuid/uuid.module';
+import { CreateProductUseCaseSymbol } from './ports/in/create-product/create-product.use-case';
+import { CreateProductService } from './services/create-product.service';
+import {
+  AddProductToPersistencePortSymbol,
+  IAddProductToPersistencePort,
+} from './ports/out/persistence/add-product-to-persistence.port';
+import { ILoadAccountByIdPort, LoadAccountByIdPortSymbol } from './ports/out/persistence/load-account-by-id.port';
 
 const providers: FactoryProvider[] = [
   {
@@ -51,6 +58,17 @@ const providers: FactoryProvider[] = [
       LoadAccountByEmailPortSymbol,
       GenerateJwtTokenPortSymbol,
       ComparePasswordsSymbol,
+    ],
+  },
+  {
+    provide: CreateProductUseCaseSymbol,
+    useFactory: (addProductToPersistencePort: IAddProductToPersistencePort,
+                 loadAccountByIdPort: ILoadAccountByIdPort) => {
+      return new CreateProductService(addProductToPersistencePort, loadAccountByIdPort);
+    },
+    inject: [
+      AddProductToPersistencePortSymbol,
+      LoadAccountByIdPortSymbol,
     ],
   },
 ];

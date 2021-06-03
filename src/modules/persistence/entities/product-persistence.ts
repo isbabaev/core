@@ -1,7 +1,7 @@
 import { AccountPersistence } from './account-persistence';
 
 export class ProductPersistence {
-  id: number;
+  id: string;
   name: string;
   description: string;
   photoUrls: string[];
@@ -10,21 +10,17 @@ export class ProductPersistence {
   createdAt: Date;
   updatedAt: Date;
 
-  constructor(id: number,
+  constructor(id: string,
               name: string,
               description: string,
               photoUrls: string[],
               price: number,
-              seller: AccountPersistence,
-              createdAt: Date,
-              updatedAt: Date) {
+              seller: AccountPersistence) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.photoUrls = photoUrls;
     this.price = price;
     this.seller = seller;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
   }
 }

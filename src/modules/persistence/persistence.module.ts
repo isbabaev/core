@@ -8,6 +8,10 @@ import { LoadAccountByEmailAdapter } from './adapters/load-account-by-email.adap
 import { AddAccountToPersistencePortSymbol } from '../../domains/ports/out/persistence/add-account-to-persistence.port';
 import { ClientProxy, ClientProxyFactory, Transport } from '@nestjs/microservices';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { LoadAccountByIdPortSymbol } from '../../domains/ports/out/persistence/load-account-by-id.port';
+import { LoadAccountByIdAdapter } from './adapters/load-account-by-id.adapter';
+import { AddProductToPersistencePortSymbol } from '../../domains/ports/out/persistence/add-product-to-persistence.port';
+import { AddProductToPersistenceAdapter } from './adapters/add-product-to-persistence.adapter';
 
 const exportProviders: ClassProvider[] = [
   {
@@ -17,6 +21,14 @@ const exportProviders: ClassProvider[] = [
   {
     provide: LoadAccountByEmailPortSymbol,
     useClass: LoadAccountByEmailAdapter,
+  },
+  {
+    provide: LoadAccountByIdPortSymbol,
+    useClass: LoadAccountByIdAdapter,
+  },
+  {
+    provide: AddProductToPersistencePortSymbol,
+    useClass: AddProductToPersistenceAdapter,
   },
 ];
 
