@@ -25,6 +25,15 @@ import {
   IAddProductToPersistencePort,
 } from './ports/out/persistence/add-product-to-persistence.port';
 import { ILoadAccountByIdPort, LoadAccountByIdPortSymbol } from './ports/out/persistence/load-account-by-id.port';
+import { GenerateGoogleAuthUrlUseCaseSymbol } from './ports/in/generate-google-auth-url/generate-google-auth-url.use-case';
+import {
+  GenerateGoogleAuthUrlPortSymbol,
+  IGenerateGoogleAuthUrlPort,
+} from './ports/out/generate-google-auth-url/generate-google-auth-url.port';
+import { GenerateGoogleAuthUrlService } from './services/generate-google-auth-url.service';
+import { GoogleapisModule } from '../modules/googleapis/googleapis.module';
+import { CreateAccountUsingOAuthUseCaseSymbol } from './ports/in/create-account-using-google/create-account-using-oauth.use-case';
+import { CreateAccountUsingOAuthService } from './services/create-account-using-o-auth.service';
 
 const providers: FactoryProvider[] = [
   {
@@ -71,6 +80,28 @@ const providers: FactoryProvider[] = [
       LoadAccountByIdPortSymbol,
     ],
   },
+  {
+    provide: GenerateGoogleAuthUrlUseCaseSymbol,
+    useFactory: (generateGoogleAuthUrlPort: IGenerateGoogleAuthUrlPort) => {
+      return new GenerateGoogleAuthUrlService(generateGoogleAuthUrlPort);
+    },
+    inject: [
+      GenerateGoogleAuthUrlPortSymbol
+    ]
+  },
+  {
+    provide: CreateAccountUsingOAuthUseCaseSymbol,
+    useFactory: (addAccountToPersistencePort: IAddAccountToPersistencePort,
+                 generateUuidPort: IGenerateUuidPort,
+                 loadAccountByEmailPort: ILoadAccountByEmailPort) => {
+      return new CreateAccountUsingOAuthService(loadAccountByEmailPort, generateUuidPort, addAccountToPersistencePort);
+    },
+    inject: [
+      AddAccountToPersistencePortSymbol,
+      GenerateUuidPortSymbol,
+      LoadAccountByEmailPortSymbol,
+    ],
+  }
 ];
 
 @Module({
@@ -79,6 +110,7 @@ const providers: FactoryProvider[] = [
     EncryptorModule,
     AuthModule,
     UuidModule,
+    GoogleapisModule,
   ],
   providers,
   exports: [...providers],

@@ -1,9 +1,7 @@
-import { BaseValueObject } from '../base-value-object';
-import * as Joi from 'joi';
+import { Uri } from '../uri';
 
-export class ProductPhotoUri extends BaseValueObject<string> {
+export class ProductPhotoUri extends Uri {
   constructor(value: string) {
-    Joi.assert(value, Joi.string().uri().required());
     super(value);
   }
 }

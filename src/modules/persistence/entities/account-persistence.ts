@@ -5,7 +5,7 @@ export class AccountPersistence {
   firstName: string;
   lastName: string;
   email: string;
-  password: string;
+  password: string | null;
   products: ProductPersistence[];
   createdAt: Date;
   updatedAt: Date;
@@ -14,7 +14,7 @@ export class AccountPersistence {
               firstName: string,
               lastName: string,
               email: string,
-              password: string,
+              password: string | null,
               products: ProductPersistence[],
               createdAt: Date,
               updatedAt: Date) {
