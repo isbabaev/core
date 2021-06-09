@@ -29,10 +29,10 @@ import { GenerateGoogleAuthUrlUseCaseSymbol } from './ports/in/generate-google-a
 import {
   GenerateGoogleAuthUrlPortSymbol,
   IGenerateGoogleAuthUrlPort,
-} from './ports/out/generate-google-auth-url/generate-google-auth-url.port';
+} from './ports/out/googleapis/generate-google-auth-url.port';
 import { GenerateGoogleAuthUrlService } from './services/generate-google-auth-url.service';
 import { GoogleapisModule } from '../modules/googleapis/googleapis.module';
-import { CreateAccountUsingOAuthUseCaseSymbol } from './ports/in/create-account-using-google/create-account-using-oauth.use-case';
+import { CreateAccountUsingOAuthUseCaseSymbol } from './ports/in/create-account-using-o-auth/create-account-using-oauth.use-case';
 import { CreateAccountUsingOAuthService } from './services/create-account-using-o-auth.service';
 
 const providers: FactoryProvider[] = [

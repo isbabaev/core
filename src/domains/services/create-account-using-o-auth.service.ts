@@ -1,6 +1,6 @@
-import { ICreateAccountUsingOAuthUseCase } from '../ports/in/create-account-using-google/create-account-using-oauth.use-case';
-import { ICreateAccountUsingOAuthResult } from '../ports/in/create-account-using-google/create-account-using-oauth.result';
-import { CreateAccountUsingOAuthCommand } from '../ports/in/create-account-using-google/create-account-using-oauth.command';
+import { ICreateAccountUsingOAuthUseCase } from '../ports/in/create-account-using-o-auth/create-account-using-oauth.use-case';
+import { ICreateAccountUsingOAuthResult } from '../ports/in/create-account-using-o-auth/create-account-using-oauth.result';
+import { CreateAccountUsingOAuthCommand } from '../ports/in/create-account-using-o-auth/create-account-using-oauth.command';
 import { ILoadAccountByEmailPort } from '../ports/out/persistence/load-account-by-email.port';
 import { Id } from '../value-objects/id';
 import { IGenerateUuidPort } from '../ports/out/uuid/generate-uuid.port';
