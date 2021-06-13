@@ -8,8 +8,7 @@ import { GetAccountInfoByTokenService } from './services/get-account-info-by-tok
 import { GetTokenByCodeService } from './services/get-token-by-code.service';
 import { LoadGoogleAccountInfoByCodePortSymbol } from '../../domains/ports/out/googleapis/load-account-info-by-code/load-google-account-info-by-code.port';
 import { LoadGoogleAccountInfoByCodeAdapter } from './adapters/load-google-account-info-by-code.adapter';
-
-export const OAuth2ClientSymbol = Symbol('OAuth2Client');
+import { OAuth2Client } from 'google-auth-library/build/src/auth/oauth2client';
 
 const exportProviders: ClassProvider[] = [
   {
@@ -24,15 +23,11 @@ const exportProviders: ClassProvider[] = [
 
 @Module({
   imports: [
-    ConfigModule,
+    ConfigModule.forRoot(),
   ],
   providers: [
-    GenerateAuthUrlService,
-    GetAccountInfoByTokenService,
-    GetTokenByCodeService,
-    ...exportProviders,
     {
-      provide: OAuth2ClientSymbol,
+      provide: OAuth2Client,
       useFactory: (configService: ConfigService) => {
         const clientId = configService.get('GOOGLE_CLIENT_ID');
         const clientSecret = configService.get('GOOGLE_CLIENT_SECRET');
@@ -45,9 +40,13 @@ const exportProviders: ClassProvider[] = [
         );
       },
       inject: [
-        ConfigModule,
+        ConfigService,
       ],
     },
+    GenerateAuthUrlService,
+    GetAccountInfoByTokenService,
+    GetTokenByCodeService,
+    ...exportProviders,
   ],
   exports: [
     ...exportProviders,

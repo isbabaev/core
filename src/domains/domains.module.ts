@@ -32,7 +32,16 @@ import {
 } from './ports/out/googleapis/generate-google-auth-url.port';
 import { GenerateGoogleAuthUrlService } from './services/generate-google-auth-url.service';
 import { GoogleapisModule } from '../modules/googleapis/googleapis.module';
-import { CreateAccountUsingOAuthUseCaseSymbol } from './ports/in/create-account-using-o-auth/create-account-using-oauth.use-case';
+import {
+  CreateAccountUsingOAuthUseCaseSymbol,
+  ICreateAccountUsingOAuthUseCase,
+} from './ports/in/create-account-using-o-auth/create-account-using-oauth.use-case';
+import { CreateAccountUsingGoogleUseCaseSymbol } from './ports/in/create-account-using-google/create-account-using-google.use-case';
+import { CreateAccountUsingGoogleService } from './services/create-account-using-google.service';
+import {
+  ILoadGoogleAccountInfoByCodePort,
+  LoadGoogleAccountInfoByCodePortSymbol,
+} from './ports/out/googleapis/load-account-info-by-code/load-google-account-info-by-code.port';
 import { CreateAccountUsingOAuthService } from './services/create-account-using-o-auth.service';
 
 const providers: FactoryProvider[] = [
@@ -86,22 +95,33 @@ const providers: FactoryProvider[] = [
       return new GenerateGoogleAuthUrlService(generateGoogleAuthUrlPort);
     },
     inject: [
-      GenerateGoogleAuthUrlPortSymbol
-    ]
+      GenerateGoogleAuthUrlPortSymbol,
+    ],
   },
   {
     provide: CreateAccountUsingOAuthUseCaseSymbol,
-    useFactory: (addAccountToPersistencePort: IAddAccountToPersistencePort,
+    useFactory: (loadAccountByEmail: ILoadAccountByEmailPort,
                  generateUuidPort: IGenerateUuidPort,
-                 loadAccountByEmailPort: ILoadAccountByEmailPort) => {
-      return new CreateAccountUsingOAuthService(loadAccountByEmailPort, generateUuidPort, addAccountToPersistencePort);
+                 addAccountToPersistencePort: IAddAccountToPersistencePort) => {
+      return new CreateAccountUsingOAuthService(loadAccountByEmail, generateUuidPort, addAccountToPersistencePort);
     },
     inject: [
-      AddAccountToPersistencePortSymbol,
-      GenerateUuidPortSymbol,
       LoadAccountByEmailPortSymbol,
+      GenerateUuidPortSymbol,
+      AddAccountToPersistencePortSymbol,
     ],
-  }
+  },
+  {
+    provide: CreateAccountUsingGoogleUseCaseSymbol,
+    useFactory: (loadGoogleAccountInfoByCodePort: ILoadGoogleAccountInfoByCodePort,
+                 createAccountUsingOAuth: ICreateAccountUsingOAuthUseCase) => {
+      return new CreateAccountUsingGoogleService(loadGoogleAccountInfoByCodePort, createAccountUsingOAuth);
+    },
+    inject: [
+      LoadGoogleAccountInfoByCodePortSymbol,
+      CreateAccountUsingOAuthUseCaseSymbol,
+    ],
+  },
 ];
 
 @Module({

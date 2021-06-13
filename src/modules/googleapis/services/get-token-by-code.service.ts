@@ -1,10 +1,9 @@
-import { Inject } from '@nestjs/common';
-import { OAuth2ClientSymbol } from '../googleapis.module';
+import { Injectable } from '@nestjs/common';
 import { OAuth2Client } from 'google-auth-library/build/src/auth/oauth2client';
 
+@Injectable()
 export class GetTokenByCodeService {
-  constructor(@Inject(OAuth2ClientSymbol)
-              private readonly oAuth2Client: OAuth2Client) {
+  constructor(private readonly oAuth2Client: OAuth2Client) {
   }
 
   async getTokenByCode(code: string): Promise<string> {
