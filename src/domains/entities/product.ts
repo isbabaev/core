@@ -5,67 +5,84 @@ import { ProductDescription } from '../value-objects/product/product-description
 import { ProductPhotoUri } from '../value-objects/product/product-photo-uri';
 import { Price } from '../value-objects/price';
 import * as Joi from 'joi';
+import { CreatedAt } from '../value-objects/created-at';
+import { UpdatedAt } from '../value-objects/updated-at';
 
 export class Product {
-  private static id: Id;
-  private static _name: ProductName;
-  private static description: ProductDescription;
-  private static photoUris: ProductPhotoUri[];
-  private static price: Price; // TODO currency
-  private static seller: Account;
+  private readonly _id: Id;
+  private _name: ProductName;
+  private _description: ProductDescription;
+  private _photoUris: ProductPhotoUri[];
+  private _price: Price; // TODO currency
+  private _seller: Account;
+  private readonly _createdAt: CreatedAt;
+  private _updatedAt: UpdatedAt;
 
   get id(): Id {
-    return Product.id;
-  }
-
-  set id(value: Id) {
-    Joi.assert(value, Joi.object().instance(Id));
-    Product.id = value;
+    return this._id;
   }
 
   get name(): ProductName {
-    return Product._name;
+    return this._name;
   }
 
   set name(value: ProductName) {
     Joi.assert(value, Joi.object().instance(ProductName));
-    Product._name = value;
+    this._name = value;
+
+    this.changeUpdatedAt();
   }
 
   get description(): ProductDescription {
-    return Product.description;
+    return this._description;
   }
 
   set description(value: ProductDescription) {
     Joi.assert(value, Joi.object().instance(ProductDescription));
-    Product.description = value;
+    this._description = value;
+
+    this.changeUpdatedAt();
   }
 
   get photoUris(): ProductPhotoUri[] {
-    return Product.photoUris;
+    return this._photoUris;
   }
 
   set photoUris(value: ProductPhotoUri[]) {
     Joi.assert(value, Joi.array().items(Joi.object().instance(ProductPhotoUri)));
-    Product.photoUris = value;
+    this._photoUris = value;
+
+    this.changeUpdatedAt();
   }
 
   get price(): Price {
-    return Product.price;
+    return this._price;
   }
 
   set price(value: Price) {
     Joi.assert(value, Joi.object().instance(Price));
-    Product.price = value;
+    this._price = value;
+
+    this.changeUpdatedAt();
   }
 
   get seller(): Account {
-    return Product.seller;
+    return this._seller;
   }
 
   set seller(value: Account) {
     Joi.assert(value, Joi.object().instance(Account));
-    Product.seller = value;
+    this._seller = value;
+
+    this.changeUpdatedAt();
+  }
+
+  get createdAt(): CreatedAt {
+    return this._createdAt;
+  }
+
+  get updatedAt(): UpdatedAt {
+    return this._updatedAt;
   }
 
   constructor(id: Id,
@@ -74,12 +91,17 @@ export class Product {
               photoUris: ProductPhotoUri[],
               price: Price,
               seller: Account) {
-
-    this.id = id;
+    Joi.assert(id, Joi.object().instance(Id));
+    this._id = id;
     this.name = name;
     this.description = description;
     this.photoUris = photoUris;
     this.price = price;
     this.seller = seller;
+    this._createdAt = new CreatedAt(new Date());
+  }
+
+  private changeUpdatedAt(): void {
+    this._updatedAt = new UpdatedAt(new Date());
   }
 }
