@@ -20,6 +20,7 @@ describe('ProductTest', () => {
   let productPhotoUris: ProductPhotoUri[];
   let productPrice: Price;
   let productSeller: Account;
+  let requestAccount: Account;
 
   let product: Product;
 
@@ -29,13 +30,15 @@ describe('ProductTest', () => {
     productDescription = new ProductDescription('ProductDescription');
     productPhotoUris = [new ProductPhotoUri('https://test.com/photo')];
     productPrice = new Price(new BigNumber(1), new Currency('dollar'));
-    productSeller = new Account(
+    const account = new Account(
       new Id(uuidv4()),
       new AccountFirstName('firstName'),
       new AccountLastName('lastName'),
       new AccountEmail('mail@mail.com'),
       new AccountPassword('password'),
     );
+    productSeller = account;
+    requestAccount = account;
 
     product = new Product(
       productId,
@@ -44,6 +47,7 @@ describe('ProductTest', () => {
       productPhotoUris,
       productPrice,
       productSeller,
+      requestAccount,
     );
   });
 
@@ -62,6 +66,7 @@ describe('ProductTest', () => {
         productPhotoUris,
         productPrice,
         productSeller,
+        requestAccount,
       );
     }).toThrowError('id is null or undefined');
   });
@@ -77,6 +82,7 @@ describe('ProductTest', () => {
         productPhotoUris,
         productPrice,
         productSeller,
+        requestAccount,
       );
     }).toThrowError('description is null or undefined');
   });
@@ -92,6 +98,7 @@ describe('ProductTest', () => {
         _productPhotoUris,
         productPrice,
         productSeller,
+        requestAccount,
       );
     }).toThrowError('photoUris is null or undefined');
   });
@@ -107,6 +114,7 @@ describe('ProductTest', () => {
         productPhotoUris,
         _productPrice,
         productSeller,
+        requestAccount,
       );
     }).toThrowError('price is null or undefined');
   });
@@ -122,6 +130,7 @@ describe('ProductTest', () => {
         productPhotoUris,
         productPrice,
         _productSeller,
+        requestAccount,
       );
     }).toThrowError('seller is null or undefined');
   });

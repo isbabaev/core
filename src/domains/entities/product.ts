@@ -25,15 +25,6 @@ export class Product {
     return this._name;
   }
 
-  set name(value: ProductName) {
-    if (value == null) {
-      throw new Error('name is null or undefined');
-    }
-    this._name = value;
-
-    this.updateUpdatedAt();
-  }
-
   get description(): ProductDescription {
     return this._description;
   }
@@ -99,12 +90,17 @@ export class Product {
               description: ProductDescription,
               photoUris: ProductPhotoUri[],
               price: Price,
-              seller: Account) {
+              seller: Account,
+              requestAccount: Account) {
+    if (requestAccount.id !== seller.id) {
+      throw new Error('the user does not have access to create product');
+    }
+
     if (id == null) {
       throw new Error('id is null or undefined');
     }
     this._id = id;
-    this.name = name;
+    this.setName(name, requestAccount);
     this.description = description;
     this.photoUris = photoUris;
     this.price = price;
