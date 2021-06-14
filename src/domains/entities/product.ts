@@ -31,7 +31,7 @@ export class Product {
     }
     this._name = value;
 
-    this.changeUpdatedAt();
+    this.updateUpdatedAt();
   }
 
   get description(): ProductDescription {
@@ -44,7 +44,7 @@ export class Product {
     }
     this._description = value;
 
-    this.changeUpdatedAt();
+    this.updateUpdatedAt();
   }
 
   get photoUris(): ProductPhotoUri[] {
@@ -57,7 +57,7 @@ export class Product {
     }
     this._photoUris = value;
 
-    this.changeUpdatedAt();
+    this.updateUpdatedAt();
   }
 
   get price(): Price {
@@ -70,7 +70,7 @@ export class Product {
     }
     this._price = value;
 
-    this.changeUpdatedAt();
+    this.updateUpdatedAt();
   }
 
   get seller(): Account {
@@ -83,7 +83,7 @@ export class Product {
     }
     this._seller = value;
 
-    this.changeUpdatedAt();
+    this.updateUpdatedAt();
   }
 
   get createdAt(): CreatedAt {
@@ -110,10 +110,24 @@ export class Product {
     this.price = price;
     this.seller = seller;
     this._createdAt = new CreatedAt(new Date());
-    this.changeUpdatedAt();
+    this.updateUpdatedAt();
   }
 
-  private changeUpdatedAt(): void {
+  private updateUpdatedAt(): void {
     this._updatedAt = new UpdatedAt(new Date());
+  }
+
+  setName(productName: ProductName, requestAccount: Account) {
+    if (requestAccount.id !== this.seller.id) {
+      throw new Error('the user does not have access to edit the name');
+    }
+
+    if (productName == null) {
+      throw new Error('name is null or undefined');
+    }
+
+    this._name = productName;
+
+    this.updateUpdatedAt();
   }
 }
