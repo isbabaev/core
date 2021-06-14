@@ -26,6 +26,9 @@ export class Product {
   }
 
   set name(value: ProductName) {
+    if (value == null) {
+      throw new Error('name is null or undefined');
+    }
     this._name = value;
 
     this.changeUpdatedAt();
@@ -36,6 +39,9 @@ export class Product {
   }
 
   set description(value: ProductDescription) {
+    if (value == null) {
+      throw new Error('description is null or undefined');
+    }
     this._description = value;
 
     this.changeUpdatedAt();
@@ -46,6 +52,9 @@ export class Product {
   }
 
   set photoUris(value: ProductPhotoUri[]) {
+    if (value == null) {
+      throw new Error('photoUris is null or undefined');
+    }
     this._photoUris = value;
 
     this.changeUpdatedAt();
@@ -56,6 +65,9 @@ export class Product {
   }
 
   set price(value: Price) {
+    if (value == null) {
+      throw new Error('price is null or undefined');
+    }
     this._price = value;
 
     this.changeUpdatedAt();
@@ -66,6 +78,9 @@ export class Product {
   }
 
   set seller(value: Account) {
+    if (value == null) {
+      throw new Error('seller is null or undefined');
+    }
     this._seller = value;
 
     this.changeUpdatedAt();
@@ -85,6 +100,9 @@ export class Product {
               photoUris: ProductPhotoUri[],
               price: Price,
               seller: Account) {
+    if (id == null) {
+      throw new Error('id is null or undefined');
+    }
     this._id = id;
     this.name = name;
     this.description = description;
@@ -92,6 +110,7 @@ export class Product {
     this.price = price;
     this.seller = seller;
     this._createdAt = new CreatedAt(new Date());
+    this.changeUpdatedAt();
   }
 
   private changeUpdatedAt(): void {
