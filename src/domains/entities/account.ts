@@ -7,20 +7,16 @@ import { CreatedAt } from '../value-objects/created-at';
 import { UpdatedAt } from '../value-objects/updated-at';
 
 export class Account {
-  private _id: Id;
+  private readonly _id: Id;
   private _firstName: AccountFirstName;
   private _lastName: AccountLastName;
   private _email: AccountEmail;
   private _password: AccountPassword;
-  private _createdAt: CreatedAt;
+  private readonly _createdAt: CreatedAt;
   private _updatedAt: UpdatedAt;
 
   get id(): Id {
     return this._id;
-  }
-
-  set id(value: Id) {
-    this._id = value;
   }
 
   get firstName(): AccountFirstName {
@@ -29,6 +25,8 @@ export class Account {
 
   set firstName(value: AccountFirstName) {
     this._firstName = value;
+
+    this.changeUpdatedAt();
   }
 
   get lastName(): AccountLastName {
@@ -37,6 +35,8 @@ export class Account {
 
   set lastName(value: AccountLastName) {
     this._lastName = value;
+
+    this.changeUpdatedAt();
   }
 
   get email(): AccountEmail {
@@ -45,6 +45,8 @@ export class Account {
 
   set email(value: AccountEmail) {
     this._email = value;
+
+    this.changeUpdatedAt();
   }
 
   get password(): AccountPassword {
@@ -53,14 +55,12 @@ export class Account {
 
   set password(value: AccountPassword) {
     this._password = value;
+
+    this.changeUpdatedAt();
   }
 
   get createdAt(): CreatedAt {
     return this._createdAt;
-  }
-
-  set createdAt(value: CreatedAt) {
-    this._createdAt = value;
   }
 
   get updatedAt(): UpdatedAt {
@@ -69,21 +69,25 @@ export class Account {
 
   set updatedAt(value: UpdatedAt) {
     this._updatedAt = value;
+
+    this.changeUpdatedAt();
   }
 
   constructor(id: Id,
               firstName: AccountFirstName,
               lastName: AccountLastName,
               email: AccountEmail,
-              password: AccountPassword,
-              createdAt: CreatedAt,
-              updatedAt: CreatedAt) {
-    this.id = id;
+              password: AccountPassword) {
+    this._id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.password = password;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
+    this._createdAt = new CreatedAt(new Date());
+    this.changeUpdatedAt();
+  }
+
+  private changeUpdatedAt(): void {
+    this._updatedAt = new UpdatedAt(new Date());
   }
 }
