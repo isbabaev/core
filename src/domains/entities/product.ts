@@ -12,7 +12,7 @@ export class Product {
   private _name: ProductName;
   private _description: ProductDescription;
   private _photoUris: ProductPhotoUri[];
-  private _price: Price; // TODO currency
+  private _price: Price;
   private _seller: Account;
   private readonly _createdAt: CreatedAt;
   private _updatedAt: UpdatedAt;

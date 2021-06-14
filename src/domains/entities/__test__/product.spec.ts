@@ -13,6 +13,7 @@ import { CreatedAt } from '../../value-objects/created-at';
 import { UpdatedAt } from '../../value-objects/updated-at';
 import BigNumber from 'bignumber.js';
 import { v4 as uuidv4 } from 'uuid';
+import { Currency } from '../../value-objects/currency';
 
 describe('ProductTest', () => {
   test('should create Product instance', () => {
@@ -33,7 +34,7 @@ describe('ProductTest', () => {
       new ProductName('ProductName'),
       new ProductDescription('ProductDescription'),
       [new ProductPhotoUri('https://test.com/photo')],
-      new Price(new BigNumber(1)),
+      new Price(new BigNumber(1), new Currency('dollar')),
       seller
     );
 
