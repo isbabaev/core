@@ -135,9 +135,30 @@ describe('ProductTest', () => {
     }).toThrowError('seller is null or undefined');
   });
 
+  test('should throw error "requestAccount is null or undefined" when requestAccount is null', () => {
+    const _requestAccount = null;
+
+    expect(() => {
+      new Product(
+        productId,
+        productName,
+        productDescription,
+        productPhotoUris,
+        productPrice,
+        productSeller,
+        _requestAccount,
+      );
+    }).toThrowError('requestAccount is null or undefined');
+  });
+
   describe('setName', () => {
+    let newProductName: ProductName;
+
+    beforeAll(() => {
+      newProductName = new ProductName('NewProductName');
+    });
+
     test('should change product name', () => {
-      const newProductName = new ProductName('NewProductName');
       product.setName(newProductName, productSeller);
 
       expect(product.name).toEqual(newProductName);
@@ -152,25 +173,65 @@ describe('ProductTest', () => {
         new AccountEmail('mail@mail.com'),
         new AccountPassword('password'),
       );
-      const newProductName = new ProductName('NewProductName');
 
       expect(() => product.setName(newProductName, requestAccount))
         .toThrowError('the user does not have access to edit the name');
     });
 
-    test(`should throw error "name is null or undefined" 
-                when productName is null`, () => {
-      const newProductName = null;
+    test(`should throw error "name is null or undefined" when productName is null`, () => {
+      const _newProductName = null;
 
-      expect(() => product.setName(newProductName, productSeller))
+      expect(() => product.setName(_newProductName, productSeller))
         .toThrowError('name is null or undefined');
     });
 
     test(`should update updateAt`, () => {
       const oldUpdateAt = product.updatedAt;
-      const newProductName = new ProductName('NewProductName');
 
       product.setName(newProductName, productSeller);
+
+      expect(product.updatedAt.value.getTime()).toBeGreaterThan(oldUpdateAt.value.getTime());
+    });
+  });
+
+  describe('setDescription', () => {
+    let newProductDescription: ProductDescription;
+
+    beforeAll(() => {
+      newProductDescription = new ProductDescription('NewProductDescription');
+    });
+
+    test('should change product description', () => {
+      product.setDescription(newProductDescription, productSeller);
+
+      expect(product.description).toEqual(newProductDescription);
+    });
+
+    test(`should throw error "the user does not have access to edit the description" 
+                when accountId is not equal to product seller id`, () => {
+      const requestAccount = new Account(
+        new Id(uuidv4()),
+        new AccountFirstName('firstName'),
+        new AccountLastName('lastName'),
+        new AccountEmail('mail@mail.com'),
+        new AccountPassword('password'),
+      );
+
+      expect(() => product.setDescription(newProductDescription, requestAccount))
+        .toThrowError('the user does not have access to edit the description');
+    });
+
+    test(`should throw error "description is null or undefined" when productDescription is null`, () => {
+      const newProductDescription = null;
+
+      expect(() => product.setDescription(newProductDescription, productSeller))
+        .toThrowError('description is null or undefined');
+    });
+
+    test(`should update updateAt`, () => {
+      const oldUpdateAt = product.updatedAt;
+
+      product.setDescription(newProductDescription, productSeller);
 
       expect(product.updatedAt.value.getTime()).toBeGreaterThan(oldUpdateAt.value.getTime());
     });

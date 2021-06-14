@@ -29,15 +29,6 @@ export class Product {
     return this._description;
   }
 
-  set description(value: ProductDescription) {
-    if (value == null) {
-      throw new Error('description is null or undefined');
-    }
-    this._description = value;
-
-    this.updateUpdatedAt();
-  }
-
   get photoUris(): ProductPhotoUri[] {
     return this._photoUris;
   }
@@ -92,6 +83,15 @@ export class Product {
               price: Price,
               seller: Account,
               requestAccount: Account) {
+
+    if (seller == null) {
+      throw new Error('seller is null or undefined');
+    }
+
+    if (requestAccount == null) {
+      throw new Error('requestAccount is null or undefined');
+    }
+
     if (requestAccount.id !== seller.id) {
       throw new Error('the user does not have access to create product');
     }
@@ -100,11 +100,11 @@ export class Product {
       throw new Error('id is null or undefined');
     }
     this._id = id;
+    this.seller = seller;
     this.setName(name, requestAccount);
-    this.description = description;
+    this.setDescription(description, requestAccount);
     this.photoUris = photoUris;
     this.price = price;
-    this.seller = seller;
     this._createdAt = new CreatedAt(new Date());
     this.updateUpdatedAt();
   }
@@ -113,7 +113,7 @@ export class Product {
     this._updatedAt = new UpdatedAt(new Date());
   }
 
-  setName(productName: ProductName, requestAccount: Account) {
+  setName(productName: ProductName, requestAccount: Account): void {
     if (requestAccount.id !== this.seller.id) {
       throw new Error('the user does not have access to edit the name');
     }
@@ -123,6 +123,20 @@ export class Product {
     }
 
     this._name = productName;
+
+    this.updateUpdatedAt();
+  }
+
+  setDescription(productDescription: ProductDescription, requestAccount: Account): void {
+    if (requestAccount.id !== this.seller.id) {
+      throw new Error('the user does not have access to edit the description');
+    }
+
+    if (productDescription == null) {
+      throw new Error('description is null or undefined');
+    }
+
+    this._description = productDescription;
 
     this.updateUpdatedAt();
   }
