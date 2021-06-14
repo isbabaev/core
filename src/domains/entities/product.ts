@@ -33,15 +33,6 @@ export class Product {
     return this._photoUris;
   }
 
-  set photoUris(value: ProductPhotoUri[]) {
-    if (value == null) {
-      throw new Error('photoUris is null or undefined');
-    }
-    this._photoUris = value;
-
-    this.updateUpdatedAt();
-  }
-
   get price(): Price {
     return this._price;
   }
@@ -103,7 +94,7 @@ export class Product {
     this.seller = seller;
     this.setName(name, requestAccount);
     this.setDescription(description, requestAccount);
-    this.photoUris = photoUris;
+    this.setPhotoUris(photoUris, requestAccount);
     this.price = price;
     this._createdAt = new CreatedAt(new Date());
     this.updateUpdatedAt();
@@ -137,6 +128,20 @@ export class Product {
     }
 
     this._description = productDescription;
+
+    this.updateUpdatedAt();
+  }
+
+  setPhotoUris(productPhotoUris: ProductPhotoUri[], requestAccount: Account): void {
+    if (requestAccount.id !== this.seller.id) {
+      throw new Error('the user does not have access to edit the photoUris');
+    }
+
+    if (productPhotoUris == null) {
+      throw new Error('photoUris is null or undefined');
+    }
+
+    this._photoUris = productPhotoUris;
 
     this.updateUpdatedAt();
   }

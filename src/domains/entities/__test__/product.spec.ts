@@ -236,4 +236,47 @@ describe('ProductTest', () => {
       expect(product.updatedAt.value.getTime()).toBeGreaterThan(oldUpdateAt.value.getTime());
     });
   });
+
+  describe('setPhotoUris', () => {
+    let newPhotoUris: ProductPhotoUri[];
+
+    beforeAll(() => {
+      newPhotoUris = [new ProductPhotoUri('https://test.com/newPhoto')];
+    });
+
+    test('should change product photoUris', () => {
+      product.setPhotoUris(newPhotoUris, productSeller);
+
+      expect(product.photoUris).toEqual(newPhotoUris);
+    });
+
+    test(`should throw error "the user does not have access to edit the photoUris" 
+                when accountId is not equal to product seller id`, () => {
+      const requestAccount = new Account(
+        new Id(uuidv4()),
+        new AccountFirstName('firstName'),
+        new AccountLastName('lastName'),
+        new AccountEmail('mail@mail.com'),
+        new AccountPassword('password'),
+      );
+
+      expect(() => product.setPhotoUris(newPhotoUris, requestAccount))
+        .toThrowError('the user does not have access to edit the photoUris');
+    });
+
+    test(`should throw error "photoUris is null or undefined" when productPhotoUris is null`, () => {
+      const newPhotoUris = null;
+
+      expect(() => product.setPhotoUris(newPhotoUris, productSeller))
+        .toThrowError('photoUris is null or undefined');
+    });
+
+    test(`should update updateAt`, () => {
+      const oldUpdateAt = product.updatedAt;
+
+      product.setPhotoUris(newPhotoUris, productSeller);
+
+      expect(product.updatedAt.value.getTime()).toBeGreaterThan(oldUpdateAt.value.getTime());
+    });
+  });
 });
