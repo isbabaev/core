@@ -5,7 +5,6 @@ import { AccountLastName } from '../value-objects/account/account-last-name';
 import { AccountPassword } from '../value-objects/account/account-password';
 import { CreatedAt } from '../value-objects/created-at';
 import { UpdatedAt } from '../value-objects/updated-at';
-import * as Joi from 'joi';
 
 export class Account {
   private _id: Id;
@@ -21,7 +20,6 @@ export class Account {
   }
 
   set id(value: Id) {
-    Joi.assert(value, Joi.object().instance(Id));
     this._id = value;
   }
 
@@ -30,7 +28,6 @@ export class Account {
   }
 
   set firstName(value: AccountFirstName) {
-    Joi.assert(value, Joi.object().instance(AccountFirstName));
     this._firstName = value;
   }
 
@@ -39,7 +36,6 @@ export class Account {
   }
 
   set lastName(value: AccountLastName) {
-    Joi.assert(value, Joi.object().instance(AccountLastName));
     this._lastName = value;
   }
 
@@ -48,7 +44,6 @@ export class Account {
   }
 
   set email(value: AccountEmail) {
-    Joi.assert(value, Joi.object().instance(AccountEmail));
     this._email = value;
   }
 
@@ -57,7 +52,6 @@ export class Account {
   }
 
   set password(value: AccountPassword) {
-    Joi.assert(value, Joi.object().instance(AccountPassword));
     this._password = value;
   }
 
@@ -66,7 +60,6 @@ export class Account {
   }
 
   set createdAt(value: CreatedAt) {
-    Joi.assert(value, Joi.object().instance(CreatedAt));
     this._createdAt = value;
   }
 
@@ -75,7 +68,6 @@ export class Account {
   }
 
   set updatedAt(value: UpdatedAt) {
-    Joi.assert(value, Joi.object().instance(UpdatedAt));
     this._updatedAt = value;
   }
 

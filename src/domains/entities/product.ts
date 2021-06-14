@@ -4,7 +4,6 @@ import { ProductName } from '../value-objects/product/product-name';
 import { ProductDescription } from '../value-objects/product/product-description';
 import { ProductPhotoUri } from '../value-objects/product/product-photo-uri';
 import { Price } from '../value-objects/price';
-import * as Joi from 'joi';
 import { CreatedAt } from '../value-objects/created-at';
 import { UpdatedAt } from '../value-objects/updated-at';
 
@@ -27,7 +26,6 @@ export class Product {
   }
 
   set name(value: ProductName) {
-    Joi.assert(value, Joi.object().instance(ProductName));
     this._name = value;
 
     this.changeUpdatedAt();
@@ -38,7 +36,6 @@ export class Product {
   }
 
   set description(value: ProductDescription) {
-    Joi.assert(value, Joi.object().instance(ProductDescription));
     this._description = value;
 
     this.changeUpdatedAt();
@@ -49,7 +46,6 @@ export class Product {
   }
 
   set photoUris(value: ProductPhotoUri[]) {
-    Joi.assert(value, Joi.array().items(Joi.object().instance(ProductPhotoUri)));
     this._photoUris = value;
 
     this.changeUpdatedAt();
@@ -60,7 +56,6 @@ export class Product {
   }
 
   set price(value: Price) {
-    Joi.assert(value, Joi.object().instance(Price));
     this._price = value;
 
     this.changeUpdatedAt();
@@ -71,7 +66,6 @@ export class Product {
   }
 
   set seller(value: Account) {
-    Joi.assert(value, Joi.object().instance(Account));
     this._seller = value;
 
     this.changeUpdatedAt();
@@ -91,7 +85,6 @@ export class Product {
               photoUris: ProductPhotoUri[],
               price: Price,
               seller: Account) {
-    Joi.assert(id, Joi.object().instance(Id));
     this._id = id;
     this.name = name;
     this.description = description;
