@@ -4,50 +4,33 @@ import { Id } from '../value-objects/id';
 import { PurchaseDate } from '../value-objects/purchase/purchase-date';
 
 export class Purchase {
-  private static id: Id;
-  private static product: Product;
-  private static buyer: Account;
-  private static purchaseDate: PurchaseDate;
+  private readonly _id: Id;
+  private readonly _product: Product;
+  private readonly _buyer: Account;
+  private readonly _purchaseDate: PurchaseDate;
 
   get id(): Id {
-    return Purchase.id;
-  }
-
-  set id(value: Id) {
-    Purchase.id = value;
+    return this._id;
   }
 
   get product(): Product {
-    return Purchase.product;
-  }
-
-  set product(value: Product) {
-    Purchase.product = value;
+    return this._product;
   }
 
   get buyer(): Account {
-    return Purchase.buyer;
-  }
-
-  set buyer(value: Account) {
-    Purchase.buyer = value;
+    return this._buyer;
   }
 
   get purchaseDate(): PurchaseDate {
-    return Purchase.purchaseDate;
-  }
-
-  set purchaseDate(value: PurchaseDate) {
-    Purchase.purchaseDate = value;
+    return this._purchaseDate;
   }
 
   constructor(id: Id,
               product: Product,
-              buyer: Account,
-              purchaseDate: PurchaseDate) {
-    this.id = id;
-    this.product = product;
-    this.buyer = buyer;
-    this.purchaseDate = purchaseDate;
+              buyer: Account) {
+    this._id = id;
+    this._product = product;
+    this._buyer = buyer;
+    this._purchaseDate = new PurchaseDate(new Date());
   }
 }

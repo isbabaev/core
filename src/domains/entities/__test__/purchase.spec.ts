@@ -1,4 +1,3 @@
-import * as jwt from 'jsonwebtoken';
 import { Account } from '../account';
 import { Id } from '../../value-objects/id';
 import { Product } from '../product';
@@ -10,12 +9,10 @@ import { AccountFirstName } from '../../value-objects/account/account-first-name
 import { AccountLastName } from '../../value-objects/account/account-last-name';
 import { AccountEmail } from '../../value-objects/account/account-email';
 import { AccountPassword } from '../../value-objects/account/account-password';
-import { CreatedAt } from '../../value-objects/created-at';
-import { UpdatedAt } from '../../value-objects/updated-at';
 import BigNumber from 'bignumber.js';
 import { Purchase } from '../purchase';
-import { PurchaseDate } from '../../value-objects/purchase/purchase-date';
 import { v4 as uuidv4 } from 'uuid';
+import { Currency } from '../../value-objects/currency';
 
 describe('PurchaseTest', () => {
   test('should create Purchase instance', () => {
@@ -26,8 +23,6 @@ describe('PurchaseTest', () => {
       new AccountLastName('lastName'),
       new AccountEmail('mail@mail.com'),
       new AccountPassword('password'),
-      new CreatedAt(new Date()),
-      new UpdatedAt(new Date()),
     );
 
     const productId = uuidv4();
@@ -36,7 +31,7 @@ describe('PurchaseTest', () => {
       new ProductName('ProductName'),
       new ProductDescription('ProductDescription'),
       [new ProductPhotoUri('https://test.com/photo')],
-      new Price(new BigNumber(1)),
+      new Price(new BigNumber(1), new Currency('dollar')),
       seller
     );
 
@@ -47,8 +42,6 @@ describe('PurchaseTest', () => {
       new AccountLastName('lastName'),
       new AccountEmail('mail@mail.com'),
       new AccountPassword('password'),
-      new CreatedAt(new Date()),
-      new UpdatedAt(new Date()),
     );
 
     const purchaseId = uuidv4();
@@ -56,7 +49,6 @@ describe('PurchaseTest', () => {
       new Id(purchaseId),
       product,
       buyer,
-      new PurchaseDate(new Date()),
     );
 
     expect(purchase).toBeInstanceOf(Purchase);
