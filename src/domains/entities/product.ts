@@ -13,7 +13,7 @@ export class Product {
   private _description: ProductDescription;
   private _photoUris: ProductPhotoUri[];
   private _price: Price;
-  private _seller: Account;
+  private readonly _seller: Account;
   private readonly _createdAt: CreatedAt;
   private _updatedAt: UpdatedAt;
 
@@ -39,15 +39,6 @@ export class Product {
 
   get seller(): Account {
     return this._seller;
-  }
-
-  set seller(value: Account) {
-    if (value == null) {
-      throw new Error('seller is null or undefined');
-    }
-    this._seller = value;
-
-    this.updateUpdatedAt();
   }
 
   get createdAt(): CreatedAt {
@@ -81,8 +72,9 @@ export class Product {
     if (id == null) {
       throw new Error('id is null or undefined');
     }
+
     this._id = id;
-    this.seller = seller;
+    this._seller = seller;
     this.setName(name, requestAccount);
     this.setDescription(description, requestAccount);
     this.setPhotoUris(photoUris, requestAccount);
