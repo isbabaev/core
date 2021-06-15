@@ -279,4 +279,47 @@ describe('ProductTest', () => {
       expect(product.updatedAt.value.getTime()).toBeGreaterThan(oldUpdateAt.value.getTime());
     });
   });
+
+  describe('setPrice', () => {
+    let newPrice: Price;
+
+    beforeAll(() => {
+      newPrice = new Price(new BigNumber(1000), new Currency('dollar'));
+    });
+
+    test('should change product price', () => {
+      product.setPrice(newPrice, requestAccount);
+
+      expect(product.price).toEqual(newPrice);
+    });
+
+    test(`should throw error "the user does not have access to edit the price" 
+                when accountId is not equal to product seller id`, () => {
+      const requestAccount = new Account(
+        new Id(uuidv4()),
+        new AccountFirstName('firstName'),
+        new AccountLastName('lastName'),
+        new AccountEmail('mail@mail.com'),
+        new AccountPassword('password'),
+      );
+
+      expect(() => product.setPrice(newPrice, requestAccount))
+        .toThrowError('the user does not have access to edit the price');
+    });
+
+    test(`should throw error "price is null or undefined" when productPrice is null`, () => {
+      const newPrice = null;
+
+      expect(() => product.setPrice(newPrice, requestAccount))
+        .toThrowError('price is null or undefined');
+    });
+
+    test(`should update updateAt`, () => {
+      const oldUpdateAt = product.updatedAt;
+
+      product.setPrice(newPrice, requestAccount);
+
+      expect(product.updatedAt.value.getTime()).toBeGreaterThan(oldUpdateAt.value.getTime());
+    });
+  });
 });

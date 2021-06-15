@@ -37,15 +37,6 @@ export class Product {
     return this._price;
   }
 
-  set price(value: Price) {
-    if (value == null) {
-      throw new Error('price is null or undefined');
-    }
-    this._price = value;
-
-    this.updateUpdatedAt();
-  }
-
   get seller(): Account {
     return this._seller;
   }
@@ -95,7 +86,7 @@ export class Product {
     this.setName(name, requestAccount);
     this.setDescription(description, requestAccount);
     this.setPhotoUris(photoUris, requestAccount);
-    this.price = price;
+    this.setPrice(price, requestAccount);
     this._createdAt = new CreatedAt(new Date());
     this.updateUpdatedAt();
   }
@@ -142,6 +133,20 @@ export class Product {
     }
 
     this._photoUris = productPhotoUris;
+
+    this.updateUpdatedAt();
+  }
+
+  setPrice(productPrice: Price, requestAccount: Account): void {
+    if (requestAccount.id !== this.seller.id) {
+      throw new Error('the user does not have access to edit the price');
+    }
+
+    if (productPrice == null) {
+      throw new Error('price is null or undefined');
+    }
+
+    this._price = productPrice;
 
     this.updateUpdatedAt();
   }
