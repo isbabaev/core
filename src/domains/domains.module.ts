@@ -19,7 +19,7 @@ import { GenerateUuidPortSymbol, IGenerateUuidPort } from './ports/out/uuid/gene
 import { IComparePasswordsPort, ComparePasswordsSymbol } from './ports/out/encryptor/compare-passwords.port';
 import { UuidModule } from '../modules/uuid/uuid.module';
 import { CreateProductUseCaseSymbol } from './ports/in/create-product/create-product.use-case';
-import { CreateProductService } from './services/create-product.service';
+import { CreateProductService } from './services/product/create-product.service';
 import {
   AddProductToPersistencePortSymbol,
   IAddProductToPersistencePort,
@@ -78,7 +78,7 @@ const providers: FactoryProvider[] = [
       ComparePasswordsSymbol,
     ],
   },
-  {
+  /*{
     provide: CreateProductUseCaseSymbol,
     useFactory: (addProductToPersistencePort: IAddProductToPersistencePort,
                  loadAccountByIdPort: ILoadAccountByIdPort) => {
@@ -88,7 +88,7 @@ const providers: FactoryProvider[] = [
       AddProductToPersistencePortSymbol,
       LoadAccountByIdPortSymbol,
     ],
-  },
+  },*/
   {
     provide: GenerateGoogleAuthUrlUseCaseSymbol,
     useFactory: (generateGoogleAuthUrlPort: IGenerateGoogleAuthUrlPort) => {

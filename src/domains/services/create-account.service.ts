@@ -8,8 +8,6 @@ import { CreateAccountCommand } from '../ports/in/create-account/create-account.
 import { IGenerateUuidPort } from '../ports/out/uuid/generate-uuid.port';
 import { Id } from '../value-objects/id';
 import { AccountPassword } from '../value-objects/account/account-password';
-import { CreatedAt } from '../value-objects/created-at';
-import { UpdatedAt } from '../value-objects/updated-at';
 import { ILoadAccountByEmailPort } from '../ports/out/persistence/load-account-by-email.port';
 import { IHashPasswordPort } from '../ports/out/encryptor/hash-password.port';
 
@@ -38,8 +36,6 @@ export class CreateAccountService implements ICreateAccountUseCase {
       lastName,
       email,
       new AccountPassword(hashedPassword),
-      new CreatedAt(new Date()),
-      new UpdatedAt(new Date()),
     );
 
     await this.addAccountToPersistencePort.addAccountToPersistence(newAccount);

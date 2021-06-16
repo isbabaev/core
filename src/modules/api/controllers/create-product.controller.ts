@@ -19,7 +19,7 @@ export class CreateProductController {
               private readonly createProductUseCase: ICreateProductUseCase) {
   }
 
-  @Post()
+  /*@Post()
   @ApiResponse({status: HttpStatus.CREATED, type: CreateProductResultDto})
   async createProduct(createProductData: CreateProductDto): Promise<CreateProductResultDto> {
     const { name, description, photoUris, price, sellerId } = createProductData;
@@ -34,5 +34,5 @@ export class CreateProductController {
       ),
     );
     return { id: createProductResult.id.value };
-  }
+  }*/
 }

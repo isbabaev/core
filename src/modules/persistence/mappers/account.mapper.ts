@@ -17,8 +17,6 @@ export class AccountMapper {
       new AccountLastName(lastName),
       new AccountEmail(email),
       new AccountPassword(password),
-      new CreatedAt(createdAt),
-      new UpdatedAt(updatedAt),
     );
   }
 

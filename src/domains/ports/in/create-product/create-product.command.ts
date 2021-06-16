@@ -11,6 +11,7 @@ export class CreateProductCommand {
   private _photoUris: ProductPhotoUri[];
   private _price: Price;
   private _sellerId: Id;
+  readonly requestAccountId: Id;
 
   get name(): ProductName {
     return this._name;
@@ -61,11 +62,13 @@ export class CreateProductCommand {
               description: ProductDescription,
               photoUris: ProductPhotoUri[],
               price: Price,
-              sellerId: Id) {
+              sellerId: Id,
+              requestAccountId: Id) {
     this.name = name;
     this.description = description;
     this.photoUris = photoUris;
     this.price = price;
     this.sellerId = sellerId;
+    this.requestAccountId = requestAccountId;
   }
 }
