@@ -142,4 +142,12 @@ export class Product {
 
     this.updateUpdatedAt();
   }
+
+  canDelete(requestAccount: Account): boolean {
+    if (requestAccount == null) {
+      throw new Error('requestAccount is null or undefined');
+    }
+
+    return requestAccount.id.equalsTo(this.seller.id);
+  }
 }

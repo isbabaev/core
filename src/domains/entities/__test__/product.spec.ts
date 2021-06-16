@@ -329,4 +329,32 @@ describe('ProductTest', () => {
       expect(product.updatedAt.value.getTime()).toBeGreaterThan(oldUpdateAt.value.getTime());
     });
   });
+
+  describe('canDelete', () => {
+    test('should return true when requestAccount is equal to seller', () => {
+      const canDelete = product.canDelete(requestAccount);
+
+      expect(canDelete).toBeTruthy();
+    });
+
+    test('should return false when requestAccount is not equal to seller', () => {
+      const _requestAccount = new Account(
+        new Id(uuidv4()),
+        new AccountFirstName('firstName'),
+        new AccountLastName('lastName'),
+        new AccountEmail('mail@mail.com'),
+        new AccountPassword('password'),
+      );
+
+      const canDelete = product.canDelete(_requestAccount);
+
+      expect(canDelete).toBeFalsy();
+    });
+
+    test('should throw error "requestAccount is null or undefined" when requestAccount is null', () => {
+      const _requestAccount = null;
+
+      expect(() => product.canDelete(_requestAccount)).toThrowError('requestAccount is null or undefined');
+    });
+  });
 });
