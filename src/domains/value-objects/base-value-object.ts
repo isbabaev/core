@@ -8,4 +8,8 @@ export class BaseValueObject<T> {
   get value(): T {
     return this._value;
   }
+
+  equalsTo(valueObject: BaseValueObject<T>) {
+    return this.value === valueObject.value;
+  }
 }

@@ -30,15 +30,22 @@ describe('ProductTest', () => {
     productDescription = new ProductDescription('ProductDescription');
     productPhotoUris = [new ProductPhotoUri('https://test.com/photo')];
     productPrice = new Price(new BigNumber(1), new Currency('dollar'));
-    const account = new Account(
-      new Id(uuidv4()),
+
+    const accountUuid = uuidv4();
+    productSeller = new Account(
+      new Id(accountUuid),
       new AccountFirstName('firstName'),
       new AccountLastName('lastName'),
       new AccountEmail('mail@mail.com'),
       new AccountPassword('password'),
     );
-    productSeller = account;
-    requestAccount = account;
+    requestAccount = new Account(
+      new Id(accountUuid),
+      new AccountFirstName('firstName'),
+      new AccountLastName('lastName'),
+      new AccountEmail('mail@mail.com'),
+      new AccountPassword('password'),
+    );
 
     product = new Product(
       productId,
@@ -295,7 +302,7 @@ describe('ProductTest', () => {
 
     test(`should throw error "the user does not have access to edit the price" 
                 when accountId is not equal to product seller id`, () => {
-      const requestAccount = new Account(
+      const _requestAccount = new Account(
         new Id(uuidv4()),
         new AccountFirstName('firstName'),
         new AccountLastName('lastName'),
@@ -303,7 +310,7 @@ describe('ProductTest', () => {
         new AccountPassword('password'),
       );
 
-      expect(() => product.setPrice(newPrice, requestAccount))
+      expect(() => product.setPrice(newPrice, _requestAccount))
         .toThrowError('the user does not have access to edit the price');
     });
 
