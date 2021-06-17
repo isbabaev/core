@@ -185,6 +185,13 @@ describe('ProductTest', () => {
         .toThrowError('the user does not have access to edit the name');
     });
 
+    test(`should throw error "requestAccount is null or undefined" when requestAccount is null`, () => {
+      const requestAccount = null;
+
+      expect(() => product.setName(newProductName, requestAccount))
+        .toThrowError('requestAccount is null or undefined');
+    });
+
     test(`should throw error "name is null or undefined" when productName is null`, () => {
       const _newProductName = null;
 
@@ -226,6 +233,13 @@ describe('ProductTest', () => {
 
       expect(() => product.setDescription(newProductDescription, requestAccount))
         .toThrowError('the user does not have access to edit the description');
+    });
+
+    test(`should throw error "requestAccount is null or undefined" when requestAccount is null`, () => {
+      const requestAccount = null;
+
+      expect(() => product.setDescription(newProductDescription, requestAccount))
+        .toThrowError('requestAccount is null or undefined');
     });
 
     test(`should throw error "description is null or undefined" when productDescription is null`, () => {
@@ -271,6 +285,13 @@ describe('ProductTest', () => {
         .toThrowError('the user does not have access to edit the photoUris');
     });
 
+    test(`should throw error "requestAccount is null or undefined" when requestAccount is null`, () => {
+      const requestAccount = null;
+
+      expect(() => product.setPhotoUris(newPhotoUris, requestAccount))
+        .toThrowError('requestAccount is null or undefined');
+    });
+
     test(`should throw error "photoUris is null or undefined" when productPhotoUris is null`, () => {
       const newPhotoUris = null;
 
@@ -314,11 +335,17 @@ describe('ProductTest', () => {
         .toThrowError('the user does not have access to edit the price');
     });
 
+    test(`should throw error "requestAccount is null or undefined" when requestAccount is null`, () => {
+      const requestAccount = null;
+
+      expect(() => product.setPrice(newPrice, requestAccount))
+        .toThrowError('requestAccount is null or undefined');
+    });
+
     test(`should throw error "price is null or undefined" when productPrice is null`, () => {
       const newPrice = null;
 
-      expect(() => product.setPrice(newPrice, requestAccount))
-        .toThrowError('price is null or undefined');
+      expect(() => product.setPrice(newPrice, requestAccount)).toThrowError('price is null or undefined');
     });
 
     test(`should update updateAt`, () => {

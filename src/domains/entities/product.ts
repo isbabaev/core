@@ -113,6 +113,10 @@ export class Product {
   }
 
   setName(productName: ProductName, requestAccount: Account): void {
+    if (requestAccount == null) {
+      throw new Error('requestAccount is null or undefined');
+    }
+
     if (!requestAccount.id.equalsTo(this.seller.id)) {
       throw new Error('the user does not have access to edit the name');
     }
@@ -121,6 +125,10 @@ export class Product {
   }
 
   setDescription(productDescription: ProductDescription, requestAccount: Account): void {
+    if (requestAccount == null) {
+      throw new Error('requestAccount is null or undefined');
+    }
+
     if (!requestAccount.id.equalsTo(this.seller.id)) {
       throw new Error('the user does not have access to edit the description');
     }
@@ -129,6 +137,10 @@ export class Product {
   }
 
   setPhotoUris(productPhotoUris: ProductPhotoUri[], requestAccount: Account): void {
+    if (requestAccount == null) {
+      throw new Error('requestAccount is null or undefined');
+    }
+
     if (!requestAccount.id.equalsTo(this.seller.id)) {
       throw new Error('the user does not have access to edit the photoUris');
     }
@@ -137,6 +149,10 @@ export class Product {
   }
 
   setPrice(productPrice: Price, requestAccount: Account): void {
+    if (requestAccount == null) {
+      throw new Error('requestAccount is null or undefined');
+    }
+
     if (!requestAccount.id.equalsTo(this.seller.id)) {
       throw new Error('the user does not have access to edit the price');
     }
