@@ -168,7 +168,7 @@ describe('ProductTest', () => {
     test('should change product name', () => {
       product.setName(newProductName, productSeller);
 
-      expect(product.name).toEqual(newProductName);
+      expect(product.getName()).toEqual(newProductName);
     });
 
     test(`should throw error "the user does not have access to edit the name" 
@@ -211,7 +211,7 @@ describe('ProductTest', () => {
     test('should change product description', () => {
       product.setDescription(newProductDescription, productSeller);
 
-      expect(product.description).toEqual(newProductDescription);
+      expect(product.getDescription()).toEqual(newProductDescription);
     });
 
     test(`should throw error "the user does not have access to edit the description" 
@@ -254,7 +254,7 @@ describe('ProductTest', () => {
     test('should change product photoUris', () => {
       product.setPhotoUris(newPhotoUris, productSeller);
 
-      expect(product.photoUris).toEqual(newPhotoUris);
+      expect(product.getPhotoUris()).toEqual(newPhotoUris);
     });
 
     test(`should throw error "the user does not have access to edit the photoUris" 
@@ -297,7 +297,7 @@ describe('ProductTest', () => {
     test('should change product price', () => {
       product.setPrice(newPrice, requestAccount);
 
-      expect(product.price).toEqual(newPrice);
+      expect(product.getPrice()).toEqual(newPrice);
     });
 
     test(`should throw error "the user does not have access to edit the price" 

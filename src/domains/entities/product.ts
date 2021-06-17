@@ -17,24 +17,48 @@ export class Product {
   private readonly _createdAt: CreatedAt;
   private _updatedAt: UpdatedAt;
 
+  private set name(value: ProductName) {
+    if (value == null) {
+      throw new Error('name is null or undefined');
+    }
+
+    this._name = value;
+
+    this.updateUpdatedAt();
+  }
+
+  private set description(value: ProductDescription) {
+    if (value == null) {
+      throw new Error('description is null or undefined');
+    }
+
+    this._description = value;
+
+    this.updateUpdatedAt();
+  }
+
+  private set photoUris(value: ProductPhotoUri[]) {
+    if (value == null) {
+      throw new Error('photoUris is null or undefined');
+    }
+
+    this._photoUris = value;
+
+    this.updateUpdatedAt();
+  }
+
+  private set price(value: Price) {
+    if (value == null) {
+      throw new Error('price is null or undefined');
+    }
+
+    this._price = value;
+
+    this.updateUpdatedAt();
+  }
+
   get id(): Id {
     return this._id;
-  }
-
-  get name(): ProductName {
-    return this._name;
-  }
-
-  get description(): ProductDescription {
-    return this._description;
-  }
-
-  get photoUris(): ProductPhotoUri[] {
-    return this._photoUris;
-  }
-
-  get price(): Price {
-    return this._price;
   }
 
   get seller(): Account {
@@ -69,16 +93,17 @@ export class Product {
       throw new Error('the user does not have access to create product');
     }
 
+    this._seller = seller;
+
     if (id == null) {
       throw new Error('id is null or undefined');
     }
-
     this._id = id;
-    this._seller = seller;
-    this.setName(name, requestAccount);
-    this.setDescription(description, requestAccount);
-    this.setPhotoUris(photoUris, requestAccount);
-    this.setPrice(price, requestAccount);
+
+    this.name = name;
+    this.description = description;
+    this.photoUris = photoUris;
+    this.price = price;
     this._createdAt = new CreatedAt(new Date());
     this.updateUpdatedAt();
   }
@@ -92,13 +117,7 @@ export class Product {
       throw new Error('the user does not have access to edit the name');
     }
 
-    if (productName == null) {
-      throw new Error('name is null or undefined');
-    }
-
-    this._name = productName;
-
-    this.updateUpdatedAt();
+    this.name = productName;
   }
 
   setDescription(productDescription: ProductDescription, requestAccount: Account): void {
@@ -106,13 +125,7 @@ export class Product {
       throw new Error('the user does not have access to edit the description');
     }
 
-    if (productDescription == null) {
-      throw new Error('description is null or undefined');
-    }
-
-    this._description = productDescription;
-
-    this.updateUpdatedAt();
+    this.description = productDescription;
   }
 
   setPhotoUris(productPhotoUris: ProductPhotoUri[], requestAccount: Account): void {
@@ -120,13 +133,7 @@ export class Product {
       throw new Error('the user does not have access to edit the photoUris');
     }
 
-    if (productPhotoUris == null) {
-      throw new Error('photoUris is null or undefined');
-    }
-
-    this._photoUris = productPhotoUris;
-
-    this.updateUpdatedAt();
+    this.photoUris = productPhotoUris;
   }
 
   setPrice(productPrice: Price, requestAccount: Account): void {
@@ -134,13 +141,23 @@ export class Product {
       throw new Error('the user does not have access to edit the price');
     }
 
-    if (productPrice == null) {
-      throw new Error('price is null or undefined');
-    }
+    this.price = productPrice;
+  }
 
-    this._price = productPrice;
+  getName(): ProductName {
+    return this._name;
+  }
 
-    this.updateUpdatedAt();
+  getDescription(): ProductDescription {
+    return this._description;
+  }
+
+  getPhotoUris(): ProductPhotoUri[] {
+    return this._photoUris;
+  }
+
+  getPrice(): Price {
+    return this._price;
   }
 
   canDelete(requestAccount: Account): boolean {
