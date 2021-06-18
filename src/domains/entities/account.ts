@@ -154,7 +154,7 @@ export class Account {
       throw new Error('requestAccount is null or undefined');
     }
 
-    if (!requestAccount.id.equalsTo(this.id)) { // TODO что? Пользователь может менять свою роль?))
+    if (!requestAccount.getRole().isAdmin()) {
       throw new Error('the user does not have access to edit the role');
     }
 

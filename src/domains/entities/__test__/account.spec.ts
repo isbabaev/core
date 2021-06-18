@@ -307,50 +307,50 @@ describe('AccountTest', () => {
 
   describe('setRole', () => {
     let adminRole: AccountRole;
+    let requestAccountAdmin: Account;
 
     beforeAll(() => {
       adminRole = new AccountRole('admin');
-    });
-
-    test('should change account role', () => {
-      account.setRole(adminRole, requestAccount);
-
-      expect(account.getRole()).toEqual(adminRole);
-    });
-
-    test(`should throw error "the user does not have access to edit the role" 
-                when requestAccount id is not equal to account id`, () => {
-      const _requestAccount = new Account(
+      requestAccountAdmin = new Account(
         new Id(uuidv4()),
         new AccountFirstName('firstName'),
         new AccountLastName('lastName'),
         new AccountEmail('mail@mail.com'),
         new AccountPassword('password'),
-        new AccountRole('user'),
+        adminRole
       );
+    });
 
-      expect(() => account.setRole(adminRole, _requestAccount))
+    test('should change account role', () => {
+      account.setRole(adminRole, requestAccountAdmin);
+
+      expect(account.getRole()).toEqual(adminRole);
+    });
+
+    test(`should throw error "the user does not have access to edit the role" 
+                when requestAccount role is not admin`, () => {
+      expect(() => account.setRole(adminRole, requestAccount))
         .toThrowError('the user does not have access to edit the role');
     });
 
     test(`should throw error "requestAccount is null or undefined" when requestAccount is null`, () => {
-      const requestAccount = null;
+      const _requestAccount = null;
 
-      expect(() => account.setRole(adminRole, requestAccount))
+      expect(() => account.setRole(adminRole, _requestAccount))
         .toThrowError('requestAccount is null or undefined');
     });
 
     test(`should throw error "role is null or undefined" when role is null`, () => {
       const _adminRole: AccountRole = null;
 
-      expect(() => account.setRole(_adminRole, requestAccount))
+      expect(() => account.setRole(_adminRole, requestAccountAdmin))
         .toThrowError('role is null or undefined');
     });
 
     test(`should update updateAt`, () => {
       const oldUpdateAt = account.updatedAt;
 
-      account.setRole(adminRole, requestAccount);
+      account.setRole(adminRole, requestAccountAdmin);
 
       expect(account.updatedAt.value.getTime()).toBeGreaterThan(oldUpdateAt.value.getTime());
     });
