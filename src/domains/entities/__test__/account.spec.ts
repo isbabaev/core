@@ -245,20 +245,20 @@ describe('AccountTest', () => {
     });
   });
 
-  describe('setPassword', () => {
-    let newPassword: AccountPassword;
+  describe('setRole', () => {
+    let adminRole: AccountRole;
 
     beforeAll(() => {
-      newPassword = new AccountPassword('password');
+      adminRole = new AccountRole('admin');
     });
 
-    test('should change account password', () => {
-      account.setPassword(newPassword, requestAccount);
+    test('should change account role', () => {
+      account.setRole(adminRole, requestAccount);
 
-      expect(account.getPassword()).toEqual(newPassword);
+      expect(account.getRole()).toEqual(adminRole);
     });
 
-    test(`should throw error "the user does not have access to edit the password" 
+    test(`should throw error "the user does not have access to edit the role" 
                 when requestAccount id is not equal to account id`, () => {
       const _requestAccount = new Account(
         new Id(uuidv4()),
@@ -269,28 +269,28 @@ describe('AccountTest', () => {
         new AccountRole('user'),
       );
 
-      expect(() => account.setPassword(newPassword, _requestAccount))
-        .toThrowError('the user does not have access to edit the password');
+      expect(() => account.setRole(adminRole, _requestAccount))
+        .toThrowError('the user does not have access to edit the role');
     });
 
     test(`should throw error "requestAccount is null or undefined" when requestAccount is null`, () => {
       const requestAccount = null;
 
-      expect(() => account.setPassword(newPassword, requestAccount))
+      expect(() => account.setRole(adminRole, requestAccount))
         .toThrowError('requestAccount is null or undefined');
     });
 
-    test(`should throw error "password is null or undefined" when password is null`, () => {
-      const _newPassword = null;
+    test(`should throw error "role is null or undefined" when role is null`, () => {
+      const _adminRole: AccountRole = null;
 
-      expect(() => account.setPassword(_newPassword, requestAccount))
-        .toThrowError('password is null or undefined');
+      expect(() => account.setRole(_adminRole, requestAccount))
+        .toThrowError('role is null or undefined');
     });
 
     test(`should update updateAt`, () => {
       const oldUpdateAt = account.updatedAt;
 
-      account.setPassword(newPassword, requestAccount);
+      account.setRole(adminRole, requestAccount);
 
       expect(account.updatedAt.value.getTime()).toBeGreaterThan(oldUpdateAt.value.getTime());
     });

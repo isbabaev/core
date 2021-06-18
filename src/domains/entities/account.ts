@@ -150,7 +150,7 @@ export class Account {
   }
 
   setRole(role: AccountRole, requestAccount: Account): void {
-    /*if (requestAccount == null) {
+    if (requestAccount == null) {
       throw new Error('requestAccount is null or undefined');
     }
 
@@ -160,7 +160,7 @@ export class Account {
 
     this.role = role;
 
-    this.updateUpdatedAt();*/
+    this.updateUpdatedAt();
   }
 
   getFirstName(): AccountFirstName {
@@ -177,5 +177,9 @@ export class Account {
 
   getPassword(): AccountPassword {
     return this._password;
+  }
+
+  getRole(): AccountRole {
+    return this._role;
   }
 }
