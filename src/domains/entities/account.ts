@@ -98,7 +98,7 @@ export class Account {
       throw new Error('requestAccount is null or undefined');
     }
 
-    if (!requestAccount.id.equalsTo(this.id)) {
+    if (!requestAccount.getRole().isAdmin() && !requestAccount.id.equalsTo(this.id)) {
       throw new Error('the user does not have access to edit the firstName');
     }
 
@@ -112,7 +112,7 @@ export class Account {
       throw new Error('requestAccount is null or undefined');
     }
 
-    if (!requestAccount.id.equalsTo(this.id)) {
+    if (!requestAccount.getRole().isAdmin() && !requestAccount.id.equalsTo(this.id)) {
       throw new Error('the user does not have access to edit the lastName');
     }
 
@@ -126,7 +126,7 @@ export class Account {
       throw new Error('requestAccount is null or undefined');
     }
 
-    if (!requestAccount.id.equalsTo(this.id)) {
+    if (!requestAccount.getRole().isAdmin() && !requestAccount.id.equalsTo(this.id)) {
       throw new Error('the user does not have access to edit the email');
     }
 
@@ -140,7 +140,7 @@ export class Account {
       throw new Error('requestAccount is null or undefined');
     }
 
-    if (!requestAccount.id.equalsTo(this.id)) {
+    if (!requestAccount.getRole().isAdmin() && !requestAccount.id.equalsTo(this.id)) {
       throw new Error('the user does not have access to edit the password');
     }
 
@@ -154,7 +154,7 @@ export class Account {
       throw new Error('requestAccount is null or undefined');
     }
 
-    if (!requestAccount.id.equalsTo(this.id)) {
+    if (!requestAccount.id.equalsTo(this.id)) { // TODO что? Пользователь может менять свою роль?))
       throw new Error('the user does not have access to edit the role');
     }
 

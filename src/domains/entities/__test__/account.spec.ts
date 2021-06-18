@@ -69,6 +69,21 @@ describe('AccountTest', () => {
         .toThrowError('the user does not have access to edit the firstName');
     });
 
+    test(`should change account firstName when requestAccount role is admin`, () => {
+      const _requestAccount = new Account(
+        new Id(uuidv4()),
+        new AccountFirstName('firstName'),
+        new AccountLastName('lastName'),
+        new AccountEmail('mail@mail.com'),
+        new AccountPassword('password'),
+        new AccountRole('admin'),
+      );
+
+      account.setFirstName(newFirstName, _requestAccount);
+
+      expect(account.getFirstName()).toEqual(newFirstName);
+    });
+
     test(`should throw error "requestAccount is null or undefined" when requestAccount is null`, () => {
       const requestAccount = null;
 
@@ -118,6 +133,21 @@ describe('AccountTest', () => {
 
       expect(() => account.setLastName(newLastName, _requestAccount))
         .toThrowError('the user does not have access to edit the lastName');
+    });
+
+    test(`should change account lastName when requestAccount role is admin`, () => {
+      const _requestAccount = new Account(
+        new Id(uuidv4()),
+        new AccountFirstName('firstName'),
+        new AccountLastName('lastName'),
+        new AccountEmail('mail@mail.com'),
+        new AccountPassword('password'),
+        new AccountRole('admin'),
+      );
+
+      account.setLastName(newLastName, _requestAccount);
+
+      expect(account.getLastName()).toEqual(newLastName);
     });
 
     test(`should throw error "requestAccount is null or undefined" when requestAccount is null`, () => {
@@ -171,6 +201,21 @@ describe('AccountTest', () => {
         .toThrowError('the user does not have access to edit the email');
     });
 
+    test(`should change account email when requestAccount role is admin`, () => {
+      const _requestAccount = new Account(
+        new Id(uuidv4()),
+        new AccountFirstName('firstName'),
+        new AccountLastName('lastName'),
+        new AccountEmail('mail@mail.com'),
+        new AccountPassword('password'),
+        new AccountRole('admin'),
+      );
+
+      account.setEmail(newEmail, _requestAccount);
+
+      expect(account.getEmail()).toEqual(newEmail);
+    });
+
     test(`should throw error "requestAccount is null or undefined" when requestAccount is null`, () => {
       const requestAccount = null;
 
@@ -220,6 +265,21 @@ describe('AccountTest', () => {
 
       expect(() => account.setPassword(newPassword, _requestAccount))
         .toThrowError('the user does not have access to edit the password');
+    });
+
+    test(`should change account password when requestAccount role is admin`, () => {
+      const _requestAccount = new Account(
+        new Id(uuidv4()),
+        new AccountFirstName('firstName'),
+        new AccountLastName('lastName'),
+        new AccountEmail('mail@mail.com'),
+        new AccountPassword('password'),
+        new AccountRole('admin'),
+      );
+
+      account.setPassword(newPassword, _requestAccount);
+
+      expect(account.getPassword()).toEqual(newPassword);
     });
 
     test(`should throw error "requestAccount is null or undefined" when requestAccount is null`, () => {
