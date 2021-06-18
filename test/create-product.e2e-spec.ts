@@ -53,10 +53,10 @@ describe('CreateProductE2eTest', () => {
       .expect(HttpStatus.CREATED);
 
     const addProductToPersistenceArguments = capture(mockedAddProductToPersistencePort.addProductToPersistence).first();
-    expect(addProductToPersistenceArguments[0].name.value).toBe(createProductData.name);
-    expect(addProductToPersistenceArguments[0].description.value).toBe(createProductData.description);
-    expect(addProductToPersistenceArguments[0].photoUris[0].value).toBe(createProductData.photoUris[0]);
-    expect(addProductToPersistenceArguments[0].price.value).toBe(createProductData.price);
+    expect(addProductToPersistenceArguments[0].getName().value).toBe(createProductData.name);
+    expect(addProductToPersistenceArguments[0].getDescription().value).toBe(createProductData.description);
+    expect(addProductToPersistenceArguments[0].getPhotoUris()[0].value).toBe(createProductData.photoUris[0]);
+    expect(addProductToPersistenceArguments[0].getPrice().value).toBe(createProductData.price);
     expect(addProductToPersistenceArguments[0].seller.id.value).toBe(createProductData.sellerId);
   });
 

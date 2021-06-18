@@ -13,6 +13,7 @@ import BigNumber from 'bignumber.js';
 import { Purchase } from '../purchase';
 import { v4 as uuidv4 } from 'uuid';
 import { Currency } from '../../value-objects/currency';
+import { AccountRole } from '../../value-objects/account/account-role';
 
 describe('PurchaseTest', () => {
   test('should create Purchase instance', () => {
@@ -23,6 +24,7 @@ describe('PurchaseTest', () => {
       new AccountLastName('lastName'),
       new AccountEmail('mail@mail.com'),
       new AccountPassword('password'),
+      new AccountRole('user'),
     );
 
     const productId = uuidv4();
@@ -32,6 +34,7 @@ describe('PurchaseTest', () => {
       new ProductDescription('ProductDescription'),
       [new ProductPhotoUri('https://test.com/photo')],
       new Price(new BigNumber(1), new Currency('dollar')),
+      seller,
       seller
     );
 
@@ -42,6 +45,7 @@ describe('PurchaseTest', () => {
       new AccountLastName('lastName'),
       new AccountEmail('mail@mail.com'),
       new AccountPassword('password'),
+      new AccountRole('user'),
     );
 
     const purchaseId = uuidv4();

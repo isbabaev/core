@@ -5,8 +5,7 @@ import { AccountFirstName } from '../../../domains/value-objects/account/account
 import { AccountLastName } from '../../../domains/value-objects/account/account-last-name';
 import { AccountEmail } from '../../../domains/value-objects/account/account-email';
 import { AccountPassword } from '../../../domains/value-objects/account/account-password';
-import { CreatedAt } from '../../../domains/value-objects/created-at';
-import { UpdatedAt } from '../../../domains/value-objects/updated-at';
+import { AccountRole } from '../../../domains/value-objects/account/account-role';
 
 export class AccountMapper {
   static mapToDomain(accountPersistence: AccountPersistence): Account {
@@ -17,17 +16,18 @@ export class AccountMapper {
       new AccountLastName(lastName),
       new AccountEmail(email),
       new AccountPassword(password),
+      new AccountRole('user')
     );
   }
 
   static mapToPersistence(account: Account): AccountPersistence {
-    const { id, firstName, lastName, email, password, createdAt, updatedAt } = account;
+    const { id, getFirstName, getLastName, getEmail, getPassword, createdAt, updatedAt } = account;
     return new AccountPersistence(
       id.value,
-      firstName.value,
-      lastName.value,
-      email.value,
-      password.value,
+      getFirstName().value,
+      getLastName().value,
+      getEmail().value,
+      getPassword().value,
       [],
       createdAt.value,
       updatedAt.value,
