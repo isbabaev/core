@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { DomainsModule } from '../../domains/domains.module';
-import { CreateAccountController } from './controllers/create-account.controller';
+import { AccountController } from './controllers/account.controller';
 import { SignInController } from './controllers/sign-in.controller';
 import { CreateProductController } from './controllers/create-product.controller';
 import { CreateAccountUsingGoogleController } from './controllers/create-account-using-google.controller';
@@ -9,7 +9,7 @@ import { GenerateGoogleAuthUrlController } from './controllers/generate-google-a
 @Module({
   imports: [DomainsModule],
   controllers: [
-    CreateAccountController,
+    AccountController,
     SignInController,
     CreateProductController,
     CreateAccountUsingGoogleController,

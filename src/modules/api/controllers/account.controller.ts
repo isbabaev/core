@@ -10,8 +10,8 @@ import { AccountEmail } from '../../../domains/value-objects/account/account-ema
 import { CreateAccountDto, CreateAccountResultDto } from '../dto/create-account.dto';
 import { ApiResponse } from '@nestjs/swagger';
 
-@Controller('create-account')
-export class CreateAccountController {
+@Controller('accounts')
+export class AccountController {
   constructor(@Inject(CreateAccountUseCaseSymbol)
               private readonly createAccountUseCase: ICreateAccountUseCase) {
   }

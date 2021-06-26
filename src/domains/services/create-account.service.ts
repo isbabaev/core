@@ -10,6 +10,7 @@ import { Id } from '../value-objects/id';
 import { AccountPassword } from '../value-objects/account/account-password';
 import { ILoadAccountByEmailPort } from '../ports/out/persistence/load-account-by-email.port';
 import { IHashPasswordPort } from '../ports/out/encryptor/hash-password.port';
+import { AccountRole } from '../value-objects/account/account-role';
 
 export class CreateAccountService implements ICreateAccountUseCase {
   constructor(private readonly addAccountToPersistencePort: IAddAccountToPersistencePort,
@@ -36,7 +37,7 @@ export class CreateAccountService implements ICreateAccountUseCase {
       lastName,
       email,
       new AccountPassword(hashedPassword),
-      null,
+      new AccountRole('user'),
     );
 
     await this.addAccountToPersistencePort.addAccountToPersistence(newAccount);

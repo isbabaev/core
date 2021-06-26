@@ -1,18 +1,18 @@
 import { ICreateAccountUseCase } from '../../../../domains/ports/in/create-account/create-account.use-case';
 import { anything, capture, instance, mock, when } from 'ts-mockito';
 import { CreateAccountDto } from '../../dto/create-account.dto';
-import { CreateAccountController } from '../create-account.controller';
+import { AccountController } from '../account.controller';
 import { Id } from '../../../../domains/value-objects/id';
 
 describe('CreateAccountControllerTest', () => {
-  let createAccountController: CreateAccountController;
+  let createAccountController: AccountController;
   let createAccountUseCase: ICreateAccountUseCase;
   let createAccountData: CreateAccountDto;
   let mockedId: Id;
 
   beforeAll(() => {
     createAccountUseCase = mock<ICreateAccountUseCase>();
-    createAccountController = new CreateAccountController(instance(createAccountUseCase));
+    createAccountController = new AccountController(instance(createAccountUseCase));
 
     createAccountData = new CreateAccountDto(
       'Test',
