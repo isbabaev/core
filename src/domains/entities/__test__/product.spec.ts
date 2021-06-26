@@ -12,6 +12,7 @@ import { AccountPassword } from '../../value-objects/account/account-password';
 import BigNumber from 'bignumber.js';
 import { v4 as uuidv4 } from 'uuid';
 import { Currency } from '../../value-objects/currency';
+import { AccountRole } from '../../value-objects/account/account-role';
 
 describe('ProductTest', () => {
   let productId: Id;
@@ -38,6 +39,7 @@ describe('ProductTest', () => {
       new AccountLastName('lastName'),
       new AccountEmail('mail@mail.com'),
       new AccountPassword('password'),
+      new AccountRole('user'),
     );
     requestAccount = new Account(
       new Id(accountUuid),
@@ -45,6 +47,7 @@ describe('ProductTest', () => {
       new AccountLastName('lastName'),
       new AccountEmail('mail@mail.com'),
       new AccountPassword('password'),
+      new AccountRole('user'),
     );
 
     product = new Product(
@@ -179,6 +182,7 @@ describe('ProductTest', () => {
         new AccountLastName('lastName'),
         new AccountEmail('mail@mail.com'),
         new AccountPassword('password'),
+        new AccountRole('user'),
       );
 
       expect(() => product.setName(newProductName, requestAccount))
@@ -229,6 +233,7 @@ describe('ProductTest', () => {
         new AccountLastName('lastName'),
         new AccountEmail('mail@mail.com'),
         new AccountPassword('password'),
+        new AccountRole('user'),
       );
 
       expect(() => product.setDescription(newProductDescription, requestAccount))
@@ -279,6 +284,7 @@ describe('ProductTest', () => {
         new AccountLastName('lastName'),
         new AccountEmail('mail@mail.com'),
         new AccountPassword('password'),
+        new AccountRole('user'),
       );
 
       expect(() => product.setPhotoUris(newPhotoUris, requestAccount))
@@ -329,6 +335,7 @@ describe('ProductTest', () => {
         new AccountLastName('lastName'),
         new AccountEmail('mail@mail.com'),
         new AccountPassword('password'),
+        new AccountRole('user'),
       );
 
       expect(() => product.setPrice(newPrice, _requestAccount))
@@ -371,6 +378,7 @@ describe('ProductTest', () => {
         new AccountLastName('lastName'),
         new AccountEmail('mail@mail.com'),
         new AccountPassword('password'),
+        new AccountRole('user'),
       );
 
       const canDelete = product.canDelete(_requestAccount);

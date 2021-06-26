@@ -117,7 +117,7 @@ export class Product {
       throw new Error('requestAccount is null or undefined');
     }
 
-    if (!requestAccount.id.equalsTo(this.seller.id)) {
+    if (!requestAccount.getRole().isAdmin() && !requestAccount.id.equalsTo(this.seller.id)) {
       throw new Error('the user does not have access to edit the name');
     }
 
@@ -129,7 +129,7 @@ export class Product {
       throw new Error('requestAccount is null or undefined');
     }
 
-    if (!requestAccount.id.equalsTo(this.seller.id)) {
+    if (!requestAccount.getRole().isAdmin() && !requestAccount.id.equalsTo(this.seller.id)) {
       throw new Error('the user does not have access to edit the description');
     }
 
@@ -141,7 +141,7 @@ export class Product {
       throw new Error('requestAccount is null or undefined');
     }
 
-    if (!requestAccount.id.equalsTo(this.seller.id)) {
+    if (!requestAccount.getRole().isAdmin() && !requestAccount.id.equalsTo(this.seller.id)) {
       throw new Error('the user does not have access to edit the photoUris');
     }
 
@@ -153,7 +153,7 @@ export class Product {
       throw new Error('requestAccount is null or undefined');
     }
 
-    if (!requestAccount.id.equalsTo(this.seller.id)) {
+    if (!requestAccount.getRole().isAdmin() && !requestAccount.id.equalsTo(this.seller.id)) {
       throw new Error('the user does not have access to edit the price');
     }
 

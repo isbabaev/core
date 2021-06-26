@@ -182,4 +182,16 @@ export class Account {
   getRole(): AccountRole {
     return this._role;
   }
+
+  canDelete(requestAccount: Account): boolean {
+/*    if (requestAccount == null) {
+      throw new Error('requestAccount is null or undefined');
+    }
+
+    const isCurrentAccount = requestAccount.id.equalsTo(this.id);
+    const isAdmin = requestAccount.getRole().isAdmin();
+
+    return isAdmin || isCurrentAccount;*/
+  }
+  // TODO удаление аккаунта
 }

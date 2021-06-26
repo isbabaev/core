@@ -355,4 +355,8 @@ describe('AccountTest', () => {
       expect(account.updatedAt.value.getTime()).toBeGreaterThan(oldUpdateAt.value.getTime());
     });
   });
+
+  describe('canDelete', () => { // TODO
+
+  });
 });
