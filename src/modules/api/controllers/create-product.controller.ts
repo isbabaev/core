@@ -15,9 +15,9 @@ import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('/create-product')
 export class CreateProductController {
-  constructor(@Inject(CreateProductUseCaseSymbol)
+  /*constructor(@Inject(CreateProductUseCaseSymbol)
               private readonly createProductUseCase: ICreateProductUseCase) {
-  }
+  }*/
 
   /*@Post()
   @ApiResponse({status: HttpStatus.CREATED, type: CreateProductResultDto})

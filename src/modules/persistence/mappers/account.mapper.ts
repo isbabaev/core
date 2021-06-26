@@ -21,13 +21,13 @@ export class AccountMapper {
   }
 
   static mapToPersistence(account: Account): AccountPersistence {
-    const { id, getFirstName, getLastName, getEmail, getPassword, createdAt, updatedAt } = account;
+    const { id, createdAt, updatedAt } = account;
     return new AccountPersistence(
       id.value,
-      getFirstName().value,
-      getLastName().value,
-      getEmail().value,
-      getPassword().value,
+      account.getFirstName().value,
+      account.getLastName().value,
+      account.getEmail().value,
+      account.getPassword().value,
       [],
       createdAt.value,
       updatedAt.value,
