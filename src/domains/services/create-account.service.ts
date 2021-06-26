@@ -36,6 +36,7 @@ export class CreateAccountService implements ICreateAccountUseCase {
       lastName,
       email,
       new AccountPassword(hashedPassword),
+      null,
     );
 
     await this.addAccountToPersistencePort.addAccountToPersistence(newAccount);

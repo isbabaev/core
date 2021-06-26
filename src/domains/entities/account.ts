@@ -192,6 +192,7 @@ export class Account {
     const isAdmin = requestAccount.getRole().isAdmin();
 
     return isAdmin || isCurrentAccount;*/
+    return null;
   }
   // TODO удаление аккаунта
 }

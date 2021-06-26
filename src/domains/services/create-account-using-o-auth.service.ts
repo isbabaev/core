@@ -33,6 +33,7 @@ export class CreateAccountUsingOAuthService implements ICreateAccountUsingOAuthU
       lastName,
       email,
       new AccountPassword(null),
+      null
     );
 
     await this.addAccountToPersistencePort.addAccountToPersistence(newAccount);

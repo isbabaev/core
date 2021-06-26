@@ -19,7 +19,7 @@ export class SignInService implements ISignInUseCase {
       throw Error('Account not found');
     }
 
-    const areEqual = await this.comparePasswordsPort.comparePasswords(password, account.password);
+    const areEqual = await this.comparePasswordsPort.comparePasswords(password, account.getPassword());
     if (!areEqual) {
       throw Error('Invalid password');
     }
