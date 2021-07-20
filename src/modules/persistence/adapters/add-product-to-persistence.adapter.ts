@@ -1,16 +1,19 @@
 import { IAddProductToPersistencePort } from '../../../domains/ports/out/persistence/add-product-to-persistence.port';
 import { Product } from '../../../domains/entities/product';
-import { ClientProxy } from '@nestjs/microservices';
 import { ProductMapper } from '../mappers/product.mapper';
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ProductEntity } from '../entities/product.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AddProductToPersistenceAdapter implements IAddProductToPersistencePort {
-  constructor(private readonly clientProxy: ClientProxy) {
+  constructor(@InjectRepository(ProductEntity)
+  private readonly productRepository: Repository<ProductEntity>) {
   }
 
-  addProductToPersistence(product: Product): Promise<void> {
+  async addProductToPersistence(product: Product): Promise<void> {
     const productPersistence = ProductMapper.mapToPersistence(product);
-    return this.clientProxy.send('create-product', productPersistence).toPromise();
+    await this.productRepository.insert(productPersistence);
   }
 }
