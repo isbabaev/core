@@ -1,14 +1,14 @@
 import { AccountEntity } from "../../account.entity";
-import { datatype, name, internet } from 'faker';
+import * as faker from 'faker';
 
 export function createAccountEntity(): AccountEntity {
     return new AccountEntity(
-        datatype.uuid(),
-        name.firstName(),
-        name.lastName(),
-        internet.email(),
-        internet.password(),
-        datatype.datetime(),
-        datatype.datetime(),
+        faker.datatype.uuid(),
+        faker.name.firstName(),
+        faker.name.lastName(),
+        faker.internet.email(),
+        faker.internet.password(),
+        faker.datatype.datetime(),
+        faker.datatype.datetime(),
     );
 }
