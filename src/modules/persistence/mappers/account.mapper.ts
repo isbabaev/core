@@ -1,5 +1,4 @@
 import { Account } from '../../../domains/entities/account';
-import { AccountPersistence } from '../entities-old/account-persistence';
 import { Id } from '../../../domains/value-objects/id';
 import { AccountFirstName } from '../../../domains/value-objects/account/account-first-name';
 import { AccountLastName } from '../../../domains/value-objects/account/account-last-name';
@@ -25,15 +24,14 @@ export class AccountMapper {
     );
   }
 
-  static mapToPersistence(account: Account): AccountPersistence {
+  static mapToPersistence(account: Account): AccountEntity {
     const { id, createdAt, updatedAt } = account;
-    return new AccountPersistence(
+    return new AccountEntity(
       id.value,
       account.getFirstName().value,
       account.getLastName().value,
       account.getEmail().value,
       account.getPassword().value,
-      [],
       createdAt.value,
       updatedAt.value,
     );
